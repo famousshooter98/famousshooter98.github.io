@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+		<title> {{ page.title }} | {{ site.title }} </title>
+    <meta name="author" content="{{ site.author }}" />
+		<link rel="stylesheet" href="/assets/reveal.js/css/reveal.css">
+    <link rel="stylesheet" href="/assets/reveal.js/lib/css/monokai.css">
+    <!-- I stole this from a medium post -->
+    {%if page.theme %}
+      <link rel="stylesheet" href="{{ "/assets/reveal.js/css/theme/" | prepend: site.baseurl | append: page.theme | append: '.css' }}" id="theme"/>
+    {% else %}
+      <link rel="stylesheet" href="{{ "/assets/reveal.js/css/theme/black.css" | prepend: site.baseurl }}" id="theme"/>
+    {% endif %}
+    <!-- Adding Printing Capability -->
+    <script>
+      var link = document.createElement( 'link' );
+      link.rel = 'stylesheet';
+      link.type = 'text/css';
+      link.href = window.location.search.match( /print-pdf/gi ) ? '/assets/reveal.js/css/print/pdf.css' : '/assets/reveal.js/css/print/paper.css';
+      document.getElementsByTagName( 'head' )[0].appendChild( link );
+    </script>
+    <!-- Add Google Analytics -->
+    {%- if jekyll.environment == 'production' and site.google_analytics -%}
+      {%- include google-analytics.html -%}
+    {%- endif -%}
+  <!-- add in scroll bar -->
+  <style type="text/css">
+    .present {
+    overflow-y: auto;
+    height: -webkit-fill-available;
+    }
+  </style>
+  
+  </head>
+  
+  <body>
+    <div class="reveal">
+      <div class="slides">
+        <section data-markdown data-separator="^\n---\n$" data-separator-vertical="^\n--\n$">
+          <script type="text/template">
+{{ page.content }}
+          </script>
+        </section>
+      </div>
+    </div>
+    <!-- <script src="{{ "/assets/reveal.js/lib/js/head.min.js" | prepend: site.baseurl }}"></script> -->
+		<script src="/assets/reveal.js/js/reveal.js"></script>
+
+		<script>
+
+			Reveal.initialize({
+				controls: true,
+				progress: true,
+				history: false,
+				center: true,
+        slideNumber: true,
+        maxScale: 1.4,
+ 
+
+				// Optional libraries used to extend on reveal.js
+				dependencies: [
+					{ src: '/assets/reveal.js/plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+                    { src: '/assets/reveal.js/plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+                    { src: '/assets/reveal.js/plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+					{ src: '/assets/reveal.js/plugin/notes/notes.js' },
+		      { src: '/assets/reveal.js/plugin/zoom-js/zoom.js', async: true }
+				]
+			});
+
+		</script>
+    
+  </body>
+</html>

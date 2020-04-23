@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+		<title> Reveal, Markdown, and Jekyll | Noether's Nonsense </title>
+    <meta name="author" content="Stephen Mazurchuk" />
+		<link rel="stylesheet" href="/assets/reveal.js/css/reveal.css">
+    <link rel="stylesheet" href="/assets/reveal.js/lib/css/monokai.css">
+    <!-- I stole this from a medium post -->
+    
+      <link rel="stylesheet" href="/assets/reveal.js/css/theme/night.css" id="theme"/>
+    
+    <!-- Adding Printing Capability -->
+    <script>
+      var link = document.createElement( 'link' );
+      link.rel = 'stylesheet';
+      link.type = 'text/css';
+      link.href = window.location.search.match( /print-pdf/gi ) ? '/assets/reveal.js/css/print/pdf.css' : '/assets/reveal.js/css/print/paper.css';
+      document.getElementsByTagName( 'head' )[0].appendChild( link );
+    </script>
+    <!-- Add Google Analytics --><!-- add in scroll bar -->
+  <style type="text/css">
+    .present {
+    overflow-y: auto;
+    height: -webkit-fill-available;
+    }
+  </style>
+  
+  </head>
+  
+  <body>
+    <div class="reveal">
+      <div class="slides">
+        <section data-markdown data-separator="^\n---\n$" data-separator-vertical="^\n--\n$">
+          <script type="text/template">
+<div>
+
+## Overview
+This is made to demonstrate how to make an online slideshow using only markdown
+
+---
+
+## Slide two
+I wanted to put in some fragments, so here is a list:
+* item 1 <!-- .element: class="fragment" data-fragment-index="1" -->
+* item 2 <!-- .element: class="fragment" data-fragment-index="2" --> 
+
+---
+
+## Slide three
+This is a code block
+```python
+import numpy as np
+np.load('file.npz')
+```
+
+---
+
+<!-- .slide: data-background="#9e8c16" -->
+## Different Color
+
+
+</div>
+
+          </script>
+        </section>
+      </div>
+    </div>
+    <!-- <script src="/assets/reveal.js/lib/js/head.min.js"></script> -->
+		<script src="/assets/reveal.js/js/reveal.js"></script>
+
+		<script>
+
+			Reveal.initialize({
+				controls: true,
+				progress: true,
+				history: false,
+				center: true,
+        slideNumber: true,
+        maxScale: 1.4,
+ 
+
+				// Optional libraries used to extend on reveal.js
+				dependencies: [
+					{ src: '/assets/reveal.js/plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+                    { src: '/assets/reveal.js/plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+                    { src: '/assets/reveal.js/plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+					{ src: '/assets/reveal.js/plugin/notes/notes.js' },
+		      { src: '/assets/reveal.js/plugin/zoom-js/zoom.js', async: true }
+				]
+			});
+
+		</script>
+    
+  </body>
+</html>
