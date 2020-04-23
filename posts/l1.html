@@ -9,27 +9,23 @@
 
     
       <!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>L1 Norm | Noether’s Nonsense</title>
 <meta name="generator" content="Jekyll v3.8.6" />
-<meta property="og:title" content="Noether’s Nonsense" />
+<meta property="og:title" content="L1 Norm" />
 <meta name="author" content="Stephen Mazurchuk" />
 <meta property="og:locale" content="en_US" />
-<meta name="description" content="A site to document work flows, ideas, and musings" />
-<meta property="og:description" content="A site to document work flows, ideas, and musings" />
-<link rel="canonical" href="http://localhost:4000/blog/" />
-<meta property="og:url" content="http://localhost:4000/blog/" />
+<meta name="description" content="A somewhat common question that often gets asked in linear regression is: Why do we minimize the square of the residuals? It might seem more natural to simply minimize the absolute value of the residuals. I remember that when I asked this question some people commented on the fact that the derivative exists for but not for . This makes it easier to prove that there is a unique analytic solution, but surely in the age of computers this isn’t an issue. It turns out this explaination is just a part of the story. The question of why square the errors has been addressed in several posts online 1 2, so I do not intend for this to be original, just my own stab at summarizing the explaination. We will consider the simplest case of univariate linear regression. In this case: To find the best estimates of w, we can use the L2 norm of the loss function, for which we get a new function of , namely, This has a unique standard solution which can be found in the usual way. For linear functions, this is always convex. In practice, we might be concerned with overfiting, and thus need regularization. We thus update the cost function with a regularization term A general family of regularization functions is just the norm of the coefficients! This is where L1 regularization is beneficial. We can get a feel for this by considering a an upper limit for the complexity (). This means that we are trying to minimize the cost within the regular unit circle of the norm. In general, L_2 minumums are equally likely to occur anywhere on the edge of the circle, but more likly to occur on the corner of the box! https://stats.stackexchange.com/questions/118/why-square-the-difference-instead-of-taking-the-absolute-value-in-standard-devia &#8617; https://www.benkuhn.net/squared &#8617;" />
+<meta property="og:description" content="A somewhat common question that often gets asked in linear regression is: Why do we minimize the square of the residuals? It might seem more natural to simply minimize the absolute value of the residuals. I remember that when I asked this question some people commented on the fact that the derivative exists for but not for . This makes it easier to prove that there is a unique analytic solution, but surely in the age of computers this isn’t an issue. It turns out this explaination is just a part of the story. The question of why square the errors has been addressed in several posts online 1 2, so I do not intend for this to be original, just my own stab at summarizing the explaination. We will consider the simplest case of univariate linear regression. In this case: To find the best estimates of w, we can use the L2 norm of the loss function, for which we get a new function of , namely, This has a unique standard solution which can be found in the usual way. For linear functions, this is always convex. In practice, we might be concerned with overfiting, and thus need regularization. We thus update the cost function with a regularization term A general family of regularization functions is just the norm of the coefficients! This is where L1 regularization is beneficial. We can get a feel for this by considering a an upper limit for the complexity (). This means that we are trying to minimize the cost within the regular unit circle of the norm. In general, L_2 minumums are equally likely to occur anywhere on the edge of the circle, but more likly to occur on the corner of the box! https://stats.stackexchange.com/questions/118/why-square-the-difference-instead-of-taking-the-absolute-value-in-standard-devia &#8617; https://www.benkuhn.net/squared &#8617;" />
+<link rel="canonical" href="http://localhost:4000/posts/l1" />
+<meta property="og:url" content="http://localhost:4000/posts/l1" />
 <meta property="og:site_name" content="Noether’s Nonsense" />
 <meta property="og:image" content="http://localhost:4000/assets/default-social-image.png" />
-<link rel="next" href="http://localhost:4000/blog/page2" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2019-11-25T00:00:00+00:00" />
 <script type="application/ld+json">
-{"@type":"WebPage","publisher":{"@type":"Organization","logo":{"@type":"ImageObject","url":"http://localhost:4000/favicon.png"},"name":"Stephen Mazurchuk"},"url":"http://localhost:4000/blog/","headline":"Noether’s Nonsense","image":"http://localhost:4000/assets/default-social-image.png","author":{"@type":"Person","name":"Stephen Mazurchuk"},"description":"A site to document work flows, ideas, and musings","@context":"https://schema.org"}</script>
+{"@type":"BlogPosting","publisher":{"@type":"Organization","logo":{"@type":"ImageObject","url":"http://localhost:4000/favicon.png"},"name":"Stephen Mazurchuk"},"url":"http://localhost:4000/posts/l1","headline":"L1 Norm","dateModified":"2019-11-25T00:00:00+00:00","datePublished":"2019-11-25T00:00:00+00:00","image":"http://localhost:4000/assets/default-social-image.png","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/posts/l1"},"author":{"@type":"Person","name":"Stephen Mazurchuk"},"description":"A somewhat common question that often gets asked in linear regression is: Why do we minimize the square of the residuals? It might seem more natural to simply minimize the absolute value of the residuals. I remember that when I asked this question some people commented on the fact that the derivative exists for but not for . This makes it easier to prove that there is a unique analytic solution, but surely in the age of computers this isn’t an issue. It turns out this explaination is just a part of the story. The question of why square the errors has been addressed in several posts online 1 2, so I do not intend for this to be original, just my own stab at summarizing the explaination. We will consider the simplest case of univariate linear regression. In this case: To find the best estimates of w, we can use the L2 norm of the loss function, for which we get a new function of , namely, This has a unique standard solution which can be found in the usual way. For linear functions, this is always convex. In practice, we might be concerned with overfiting, and thus need regularization. We thus update the cost function with a regularization term A general family of regularization functions is just the norm of the coefficients! This is where L1 regularization is beneficial. We can get a feel for this by considering a an upper limit for the complexity (). This means that we are trying to minimize the cost within the regular unit circle of the norm. In general, L_2 minumums are equally likely to occur anywhere on the edge of the circle, but more likly to occur on the corner of the box! https://stats.stackexchange.com/questions/118/why-square-the-difference-instead-of-taking-the-absolute-value-in-standard-devia &#8617; https://www.benkuhn.net/squared &#8617;","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 
-
-      
-      <title>Posts - Noether's Nonsense</title>
-      <meta property="og:title" content="Posts">
-      <meta name="description" content="My thoughts and ideas">
-      <meta property="og:description" content="My thoughts and ideas">
     
 
     <link rel="manifest" href="/manifest.json">
@@ -93,7 +89,7 @@
 
   </head>
 
-  <body class="layout-blog">
+  <body class="layout-post  l1-norm">
     <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" style="height: 0; position: absolute">
   <symbol id="codepen" viewBox="0 0 16 16"><path d="M15.988 5.443c-.004-.02-.007-.04-.012-.058l-.01-.033c-.006-.017-.012-.034-.02-.05-.003-.012-.01-.023-.014-.034l-.023-.045-.02-.032-.03-.04-.024-.03c-.01-.013-.022-.026-.034-.038l-.027-.027-.04-.032-.03-.024-.012-.01L8.38.117c-.23-.155-.53-.155-.76 0L.305 4.99.296 5c-.012.007-.022.015-.032.023-.014.01-.027.02-.04.032l-.027.027-.034.037-.024.03-.03.04c-.006.012-.013.022-.02.033l-.023.045-.015.034c-.007.016-.012.033-.018.05l-.01.032c-.005.02-.01.038-.012.058l-.006.03C.002 5.5 0 5.53 0 5.56v4.875c0 .03.002.06.006.09l.007.03c.003.02.006.04.013.058l.01.033c.006.018.01.035.018.05l.015.033c.006.016.014.03.023.047l.02.03c.008.016.018.03.03.042.007.01.014.02.023.03.01.012.02.025.034.036.01.01.018.02.028.026l.04.033.03.023.01.01 7.31 4.876c.116.078.248.117.382.116.134 0 .266-.04.38-.116l7.314-4.875.01-.01c.012-.007.022-.015.032-.023.014-.01.027-.02.04-.032l.027-.027.034-.037.024-.03.03-.04.02-.032.023-.046.015-.033.018-.052.01-.033c.005-.02.01-.038.013-.058 0-.01.003-.02.004-.03.004-.03.006-.06.006-.09V5.564c0-.03-.002-.06-.006-.09l-.007-.03zM8 9.626L5.568 8 8 6.374 10.432 8 8 9.626zM7.312 5.18l-2.98 1.993-2.406-1.61 5.386-3.59v3.206zM3.095 8l-1.72 1.15v-2.3L3.095 8zm1.237.828l2.98 1.993v3.208l-5.386-3.59 2.406-1.61zm4.355 1.993l2.98-1.993 2.407 1.61-5.387 3.59v-3.206zM12.905 8l1.72-1.15v2.3L12.905 8zm-1.237-.827L8.688 5.18V1.97l5.386 3.59-2.406 1.61z" fill-rule="nonzero"/></symbol>
   <symbol id="dribbble" viewBox="0 0 16 16"><path d="M8 16c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm6.747-6.905c-.234-.074-2.115-.635-4.257-.292.894 2.456 1.258 4.456 1.328 4.872 1.533-1.037 2.624-2.68 2.93-4.58zM10.67 14.3c-.102-.6-.5-2.688-1.46-5.18l-.044.014C5.312 10.477 3.93 13.15 3.806 13.4c1.158.905 2.614 1.444 4.194 1.444.947 0 1.85-.194 2.67-.543zm-7.747-1.72c.155-.266 2.03-3.37 5.555-4.51.09-.03.18-.056.27-.08-.173-.39-.36-.778-.555-1.16C4.78 7.85 1.47 7.807 1.17 7.8l-.003.208c0 1.755.665 3.358 1.756 4.57zM1.31 6.61c.307.005 3.122.017 6.318-.832-1.132-2.012-2.353-3.705-2.533-3.952-1.912.902-3.34 2.664-3.784 4.785zM6.4 1.368c.188.253 1.43 1.943 2.548 4 2.43-.91 3.46-2.293 3.582-2.468C11.323 1.827 9.736 1.176 8 1.176c-.55 0-1.087.066-1.6.19zm6.89 2.322c-.145.194-1.29 1.662-3.816 2.694.16.325.31.656.453.99.05.117.1.235.147.352 2.274-.286 4.533.172 4.758.22-.015-1.613-.59-3.094-1.543-4.257z"/></symbol>
@@ -148,7 +144,7 @@
 
       
 
-      <li class="item  item--nav  item--current">
+      <li class="item  item--nav">
         <a href="/blog/">Blog</a>
       </li>
     
@@ -213,237 +209,86 @@
 
 
   
-    <div class="feature" style="background-image: url(https://picsum.photos/2560/600?image=866)">
-      <div class="container  typeset" style="background: bottom;">
-        <p>Blog Posts</p>
-
-      </div>
-    </div>
-  
 
 </header>
 
 
 <main class="main  container">
 
-  <div class="content">
+  <article class="article  article--post  content  typeset">
 
-    <article class="article  article--page  typeset">
-
-      
-        
-        <h1>Posts</h1>
-        <p>My thoughts and ideas</p>
-
-
-      
-
-    </article>
-
+    <h1>L1 Norm</h1>
     
-  <section class="section  typeset">
-    <ul class="list  list--posts">
-      
-        <li class="item  item--post">
-          <article class="article  article--post">
-
-            <h2><a href="/2020/04/20/demo/">Reveal, Markdown, and Jekyll</a></h2>
-            
 
 <small class="small  post-meta">
   
   
     
-  &nbsp;&middot;&nbsp;<time datetime="2020-04-20T00:00:00+00:00" class="time">Apr 20, 2020</time>
+  &nbsp;&middot;&nbsp;<time datetime="2019-11-25T00:00:00+00:00" class="time">Nov 25, 2019</time>
 </small>
 
-            <!-- <div> ## Overview This is made to demonstrate how to make an online slideshow using only markdown --- ## Slide two I wanted to put in some fragments, so here is a list: * item 1 <!-- .element: class="fragment" data-fragment-index="1" --> * item 2 <!-- .element: class="fragment" data-fragment-index="2" --> --- ## Slide three This is a code block ```python import... -->
 
-          </article>
-        </li>
-      
-        <li class="item  item--post">
-          <article class="article  article--post">
+    <p>A somewhat common question that often gets asked in linear regression is: Why do we minimize the <em>square</em> of the residuals? It might seem more natural to simply minimize the absolute value of the residuals.</p>
 
-            <h2><a href="/2020/03/28/linear_dim_red/">Linear Dimensionality Reduction</a></h2>
-            
+<p>I remember that when I asked this question some people commented on the fact that the derivative exists for <script type="math/tex">f(x)=x^2</script> but not for <script type="math/tex">f(x)=\|x\|</script>. This makes it easier to prove that there is a unique analytic solution, but surely in the age of computers this isn’t an issue. It turns out this explaination is just a part of the story.</p>
 
-<small class="small  post-meta">
-  
+<p>The question of why square the errors has been addressed in several posts online <sup id="fnref:1"><a href="#fn:1" class="footnote">1</a></sup> <sup id="fnref:2"><a href="#fn:2" class="footnote">2</a></sup>, so I do not intend for this to be original, just my own stab at summarizing the explaination.</p>
+
+<hr />
+
+<p>We will consider the simplest case of univariate linear regression. In this case: <script type="math/tex">c=\lambda</script></p>
+
+<script type="math/tex; mode=display">\hat{y}= f_w(\textbf{x})=w_n x_n</script>
+
+<p>To find the best estimates of w, we can use the L2 norm of the loss function, for which we get a new function of <script type="math/tex">w</script>, namely, <script type="math/tex">Loss(h_\textbf{w}</script>
+This has a unique standard solution which can be found in the usual way. For linear functions, this is always <strong>convex</strong>. In practice, we might be concerned with overfiting, and thus need regularization. We thus update the cost function with a regularization term</p>
+
+<script type="math/tex; mode=display">Cost(f)= EmpLoss(f_w(x)) + \lambda Complexity(w)</script>
+
+<p>A general family of regularization functions is just the norm of the coefficients!
+This is where L1 regularization is beneficial. We can get a feel for this by considering a an upper limit for the complexity (<script type="math/tex">Complexity(w) \leq c</script>).
+This means that we are trying to minimize the cost within the regular <em>unit circle of the norm</em>. In general, L_2 minumums are equally likely to occur anywhere on the edge of the circle, but more likly to occur on the corner of the box!</p>
+
+<p><img src="/assets/l1.png" alt="picture" /></p>
+
+<script type="math/tex; mode=display">\LaTex</script>
+
+<div class="footnotes">
+  <ol>
+    <li id="fn:1">
+      <p><a href="https://stats.stackexchange.com/questions/118/why-square-the-difference-instead-of-taking-the-absolute-value-in-standard-devia">https://stats.stackexchange.com/questions/118/why-square-the-difference-instead-of-taking-the-absolute-value-in-standard-devia</a> <a href="#fnref:1" class="reversefootnote">&#8617;</a></p>
+    </li>
+    <li id="fn:2">
+      <p><a href="https://www.benkuhn.net/squared">https://www.benkuhn.net/squared</a> <a href="#fnref:2" class="reversefootnote">&#8617;</a></p>
+    </li>
+  </ol>
+</div>
+
+
+
+
+    <div class="share">
   
     
-  &nbsp;&middot;&nbsp;<time datetime="2020-03-28T00:00:00+00:00" class="time">Mar 28, 2020</time>
-</small>
-
-            <!-- <p>While there are many high-level descriptions of both Principle Component Analysis (PCA) and Independent Component Analysis (ICA), I thought I might write about a few key differences to solidify my own understanding. Both PCA and ICA are used as general dimensionality reduction techniques. However, the two methods operate under different assumptions and should not be confused with each other.</p> <h1... -->
-
-          </article>
-        </li>
       
-        <li class="item  item--post">
-          <article class="article  article--post">
+      
+      
+      
 
-            <h2><a href="/2020/02/20/assimilies/">Word Meanings Through Analogies</a></h2>
-            
+      
 
-<small class="small  post-meta">
-  
-  
+      <a class="button" href="mailto:?subject=L1 Norm&body=Hey, check out this: http://localhost:4000/posts/l1" style="background: true">Email&nbsp; <svg width="16" height="16" class="icon  icon--email" role="img" alt="email"><title>email</title><use xlink:href="#email" fill="CurrentColor"></use></svg>
+</a>
+
     
-  &nbsp;&middot;&nbsp;<time datetime="2020-02-20T00:00:00+00:00" class="time">Feb 20, 2020</time>
-</small>
-
-            <!-- <p>When I first learned about the ability of distributionally derived word representations to complete analogies I was very surprised. I thought, “surely we are on the cusp of deeply understanding language”. I think that sometimes we get so used to common knowledge that it looses some of its wonder. Why should distributional models perform well at analogies? Shouldn’t analogies be... -->
-
-          </article>
-        </li>
-      
-        <li class="item  item--post">
-          <article class="article  article--post">
-
-            <h2><a href="/2020/02/20/pmi/">Mutual Information</a></h2>
-            
-
-<small class="small  post-meta">
   
-  
+</div>
+
+
     
-  &nbsp;&middot;&nbsp;<time datetime="2020-02-20T00:00:00+00:00" class="time">Feb 20, 2020</time>
-</small>
-
-            <!-- <p>Mutual information is a metric used extensively across many fields.</p> <h1 id="intuition">Intuition</h1> <p>First, prior to talking definitions and nuance, we can get a general sense for what we are trying to measure. Given two sets of observations, we might wonder whether the observations are independent. One indication that they may not be independent is if they are correlated. However, correlation... -->
-
-          </article>
-        </li>
-      
-        <li class="item  item--post">
-          <article class="article  article--post">
-
-            <h2><a href="/2020/01/16/noisy-distances/">Distance Metrics and Noise</a></h2>
-            
-
-<small class="small  post-meta">
-  
-  
-    
-  &nbsp;&middot;&nbsp;<time datetime="2020-01-16T00:00:00+00:00" class="time">Jan 16, 2020</time>
-</small>
-
-            <!-- <p>Representational Similarity Analysis (RSA) is a widely used data analysis method used in fMRI. It is a form of Multi-Voxel Pattern Analysis (MVPA). In essence, it utilizes dissimilarity matrices to whether two datasets are expressing the same underlying information. Critical to this method is the underlying choice of distance metrics.</p> <p>There are many ways to calculate ‘Distances’ between two vectors.... -->
-
-          </article>
-        </li>
-      
-        <li class="item  item--post">
-          <article class="article  article--post">
-
-            <h2><a href="/2020/01/14/somatotopy-language/">The 'Topy' of Language</a></h2>
-            
-
-<small class="small  post-meta">
-  
-  
-    
-  &nbsp;&middot;&nbsp;<time datetime="2020-01-14T00:00:00+00:00" class="time">Jan 14, 2020</time>
-</small>
-
-            <!-- <p>I thought I might make a post of an idea that has been circulating in my head this past week. The idea centers on extending what somatopy, retinotopy, and tonotopy imply for concept representation.</p> <h2 id="background">Background</h2> <p>Somatotopy is known to exist throughout many regions of the brain. Classically, we know about the humunculus in the motor gyrus, but it is... -->
-
-          </article>
-        </li>
-      
-        <li class="item  item--post">
-          <article class="article  article--post">
-
-            <h2><a href="/2020/01/08/linear-class/">Linear Regression and Linear Classification</a></h2>
-            
-
-<small class="small  post-meta">
-  
-  
-    
-  &nbsp;&middot;&nbsp;<time datetime="2020-01-08T00:00:00+00:00" class="time">Jan 8, 2020</time>
-</small>
-
-            <!-- <p>This post is to detail the similarities between linear regression and linear classification techniques. First, we will consider some data for linear regression which falls into two categories.</p> <p>Consider some data:</p> <table> <thead> <tr> <th>X1</th> <th>X2</th> <th>Category</th> </tr> </thead> <tbody> <tr> <td>0.11</td> <td>0.96</td> <td>1</td> </tr> <tr> <td>0.2</td> <td>0.57</td> <td>1</td> </tr> <tr> <td>3.29</td> <td>4.22</td> <td>2</td> </tr> <tr> <td>5.02</td> <td>6</td> <td>2</td> </tr>... -->
-
-          </article>
-        </li>
-      
-        <li class="item  item--post">
-          <article class="article  article--post">
-
-            <h2><a href="/2019/12/05/GLM/">Creating a GLM for SOE Data</a></h2>
-            
-
-<small class="small  post-meta">
-  
-  
-    
-  &nbsp;&middot;&nbsp;<time datetime="2019-12-05T00:00:00+00:00" class="time">Dec 5, 2019</time>
-</small>
-
-            <!-- <p>I thought it might be useful to have a little tutorial about how the GLM maps are created for the SOE data. I am basing this off the current method in Tony’s scripts.</p> <h2 id="processing-scripts">Processing Scripts</h2> <p>The general process of creating <script type="math/tex">\beta</script>-maps for each word requires regressingn out words, nuissance regressors and motion.</p> <h1 id="building-word-and-nuissance-regressors">Building Word and Nuissance Regressors</h1>... -->
-
-          </article>
-        </li>
-      
-        <li class="item  item--post">
-          <article class="article  article--post">
-
-            <h2><a href="/2019/12/04/words/">Finding Word Counts</a></h2>
-            
-
-<small class="small  post-meta">
-  
-  
-    
-  &nbsp;&middot;&nbsp;<time datetime="2019-12-04T00:00:00+00:00" class="time">Dec 4, 2019</time>
-</small>
-
-            <!-- <h1 id="finding-word-counts">Finding Word Counts</h1> <p>I thought I might make a little post about to get some word counts. If you are in the MCW neurology department, then go ahead and ssh into my computer to get to a directory with a lot of text files.</p> <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ssh <span class="nv">$username</span>@noether.neuro.mcw.edu <span class="nb">cd</span> /mnt/data/smazurchuk/intern2crea/bookcorpus/out_txts </code></pre></div></div> <p>There are over 16,000... -->
-
-          </article>
-        </li>
-      
-        <li class="item  item--post">
-          <article class="article  article--post">
-
-            <h2><a href="/posts/phoneme">Phoneme Analysis</a></h2>
-            
-
-<small class="small  post-meta">
-  
-  
-    
-  &nbsp;&middot;&nbsp;<time datetime="2019-11-27T00:00:00+00:00" class="time">Nov 27, 2019</time>
-</small>
-
-            <!-- <p>This is some preliminary analysis on the phoneme dataset. There is a jupyter notebook with the code to generate the plots in this post, but I thought it might be better to simple put the results in here. First, some general propterties of the data:</p> <table> <tbody> <tr> <td>Number of Patients</td> <td>87</td> </tr> <tr> <td>Number of Runs</td> <td>230</td> </tr> <tr>... -->
-
-          </article>
-        </li>
-      
-    </ul>
-    <nav class="nav  nav--paginator">
-
-  
-    <span class="pagination  pagination--previous">&larr; Newer</span>
-  
-
-  <span class="pagination  pagination--counter">Page: 1 of 2</span>
-
-  
-    <a href="/blog/page2" class="pagination  pagination--next">Older &rarr;</a>
-  
-
-</nav>
-
-  </section>
 
 
-
-  </div>
+  </article>
 
   
 

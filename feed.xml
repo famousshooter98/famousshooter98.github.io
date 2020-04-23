@@ -1,0 +1,879 @@
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en-US"><generator uri="https://jekyllrb.com/" version="3.8.6">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" hreflang="en-US" /><updated>2020-04-23T22:13:07+00:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Noether’s Nonsense</title><subtitle>A site to document work flows, ideas, and musings</subtitle><author><name>Stephen Mazurchuk</name></author><entry><title type="html">Reveal, Markdown, and Jekyll</title><link href="http://localhost:4000/2020/04/20/demo/" rel="alternate" type="text/html" title="Reveal, Markdown, and Jekyll" /><published>2020-04-20T00:00:00+00:00</published><updated>2020-04-20T00:00:00+00:00</updated><id>http://localhost:4000/2020/04/20/demo</id><content type="html" xml:base="http://localhost:4000/2020/04/20/demo/">&lt;div&gt;
+
+## Overview
+This is made to demonstrate how to make an online slideshow using only markdown
+
+---
+
+## Slide two
+I wanted to put in some fragments, so here is a list:
+* item 1 &lt;!-- .element: class=&quot;fragment&quot; data-fragment-index=&quot;1&quot; --&gt;
+* item 2 &lt;!-- .element: class=&quot;fragment&quot; data-fragment-index=&quot;2&quot; --&gt; 
+
+---
+
+## Slide three
+This is a code block
+```python
+import numpy as np
+np.load('file.npz')
+```
+
+---
+
+&lt;!-- .slide: data-background=&quot;#9e8c16&quot; --&gt;
+## Different Color
+
+
+&lt;/div&gt;</content><author><name>Stephen Mazurchuk</name></author><summary type="html">## Overview This is made to demonstrate how to make an online slideshow using only markdown --- ## Slide two I wanted to put in some fragments, so here is a list: * item 1 * item 2 --- ## Slide three This is a code block ```python import numpy as np np.load('file.npz') ``` --- ## Different Color</summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="http://localhost:4000/assets/default-social-image.png" /><media:content medium="image" url="http://localhost:4000/assets/default-social-image.png" xmlns:media="http://search.yahoo.com/mrss/" /></entry><entry><title type="html">Linear Dimensionality Reduction</title><link href="http://localhost:4000/2020/03/28/linear_dim_red/" rel="alternate" type="text/html" title="Linear Dimensionality Reduction" /><published>2020-03-28T00:00:00+00:00</published><updated>2020-03-28T00:00:00+00:00</updated><id>http://localhost:4000/2020/03/28/linear_dim_red</id><content type="html" xml:base="http://localhost:4000/2020/03/28/linear_dim_red/">&lt;p&gt;While there are many high-level descriptions of both Principle Component Analysis (PCA) and Independent Component Analysis (ICA), I thought I might write about a few key differences to solidify my own understanding. Both PCA and ICA are used as general dimensionality reduction techniques. However, the two methods operate under different assumptions and should not be confused with each other.&lt;/p&gt;
+
+&lt;h1 id=&quot;common-to-both&quot;&gt;Common to Both&lt;/h1&gt;
+&lt;p&gt;What all decompositions seek to preserve is some distance between all pairs of points. Strictly speaking, this means that for the Euclidean metric, only rotations, flips, and translations are allowed (think all matrices with determinant=+-1). However, if we want to reduce the dimensionality of data, we necessarily need to discard some information. Most often, this corresponds to &lt;strong&gt;a linear projection into a subspace&lt;/strong&gt;. Exactly how to determine which information should be “thrown away” depends on how we construct our projection matrix. This brings us to the two most common techniques&lt;/p&gt;
+
+&lt;h2 id=&quot;pca&quot;&gt;PCA&lt;/h2&gt;
+&lt;p&gt;Most are familiar with PCA. Given some data that is multi-dimensional, the goal is to reduce the dimensionality of the data while still explaining as much of the &lt;strong&gt;variance&lt;/strong&gt; as possible. In some sense, PCA can be thought of as fitting ellipses to data.
+Crucial to how PCA explains variance, one can visualize it as finding lines in a high dimensional space in which the data appear very spread out. This approach makes the most intuitive sense when one considers the underling variables of interest as &lt;em&gt;uncorrelated gaussian random variables&lt;/em&gt;. This brings us to our first point:&lt;/p&gt;
+
+&lt;p&gt;PCA performs source separation &lt;em&gt;if&lt;/em&gt; the underlying variables are gaussian&lt;/p&gt;
+
+&lt;h1 id=&quot;point-1&quot;&gt;Point 1:&lt;/h1&gt;
+&lt;p&gt;If a signal is assumed to be a linear combination of &lt;strong&gt;independent&lt;/strong&gt; gaussian sources along with gaussian noise, then PCA and ICA optimize the same objective function. This should make sense from what we have just described&lt;/p&gt;
+
+&lt;h1 id=&quot;corollary&quot;&gt;Corollary&lt;/h1&gt;
+&lt;ol&gt;
+  &lt;li&gt;The sum of two gaussian random variables is also gaussian!&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;This is important for understanding as it makes clear why PCA amounts to rotation of coordinates. In particular, PCA generates a subspace with orthogonal basis vectors which explain a maximal amount of variance.&lt;/p&gt;
+
+&lt;p&gt;Assume &lt;strong&gt;X&lt;/strong&gt; and &lt;strong&gt;Y&lt;/strong&gt; are normally distributed variables&lt;/p&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;X \sim N(\mu_X,\sigma_X^2)&lt;/script&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;Y \sim N(\mu_Y,\sigma_Y^2)&lt;/script&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;Z = X+Y&lt;/script&gt;
+
+&lt;p&gt;then:&lt;/p&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;Z \sim N(\mu_X+\mu_Y, \sigma_X^2+\sigma_Y^2)&lt;/script&gt;
+
+&lt;p&gt;This particular formula requires that the undying variables are uncorrelated, and independent, however these conditions can be relaxed and there is still a similar result.&lt;/p&gt;
+
+&lt;h1 id=&quot;why-pca-works&quot;&gt;Why PCA works&lt;/h1&gt;
+&lt;p&gt;PCA as matrix diagonalization. We know that matrices can be thought of as collections of vectors, and a vector can be thought of as a random variable. So to have two variables be uncorrelated means they have no covariance. But what is covariance? It is a dot product! That illustrates why it is always possible to generate a rotation which uncorrelates the variables!!&lt;/p&gt;
+
+&lt;p&gt;Say we have &lt;em&gt;N&lt;/em&gt; dimensions in our data (often # columns). Taking each column as a vector with &lt;em&gt;u&lt;/em&gt; observations (# rows), we know that N independent vectors will at most spread an N dimensional space (even if there u » N observations).&lt;/p&gt;
+
+&lt;p&gt;We can take each column as a basis for this space, however, there is no reason to think the columns will be orthogonal. However, for any space, we can generate and orthonormal set of basis for the space! One way of doing this which is taught in many intro linear algebra courses is the gram-schmitt method.&lt;/p&gt;
+
+&lt;h1 id=&quot;gram-schmitt&quot;&gt;Gram Schmitt&lt;/h1&gt;
+&lt;p&gt;Write about the method here&lt;/p&gt;
+
+&lt;h1 id=&quot;more-general&quot;&gt;More General&lt;/h1&gt;
+&lt;p&gt;This orthognalization is normally done implicitly through SVD decomposition which generates unscaled principal components corresponding to the “left” eigen-vectors&lt;/p&gt;
+
+&lt;h2 id=&quot;ica&quot;&gt;ICA&lt;/h2&gt;
+&lt;p&gt;Now that we have good hold on PCA, we talk about ICA. First, and perhaps most importantly,&lt;strong&gt;Correlation is linear&lt;/strong&gt;! Variables can be completely dependent (as in example 2), but uncorrelated! To summarize the discussion above, given two random variables, there is always a distance preserving transformation which uncorrelates the variables. &lt;strong&gt;Note&lt;/strong&gt;, this is often called a &lt;em&gt;whitening&lt;/em&gt; operation to make variables less co-linear. This is not the case for a different objective called Mutual Information (MI). For a more detailed discussion about what MI is, see my other post on the topic &lt;a href=&quot;https://smazurchuk.github.io/2020/02/20/pmi.html&quot;&gt;Mutual Information&lt;/a&gt;! Avoiding the details of how ICA is implemented, on a high level, a user &lt;em&gt;apriori&lt;/em&gt; selects a target dimensionality, and a transfrom matrix is then created (often iteravly) which projects the original data onto a basis where the marginal distributions are as independent as possible (minimize MI of the target basis).&lt;/p&gt;
+
+&lt;p&gt;We can get a feel for what this means by making some examples.&lt;/p&gt;
+
+&lt;h1 id=&quot;example-1-independent-gaussian-processes&quot;&gt;Example 1: Independent Gaussian Processes&lt;/h1&gt;
+&lt;p&gt;Let’s generate two independent gaussian variables:&lt;/p&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;numpy&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;as&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;np&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;A&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;8&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;np&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;random&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;randn&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1000&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;B&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;np&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;random&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;randn&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1000&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;We can verify that these distributions are both uncorrelated and independent&lt;/p&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kn&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;sklearn&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;feature_selection&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;as&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;fs&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;m&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;fs&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;mutual_info_regression&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;np&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;c_&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;A&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;B&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;],&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;B&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;m&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;m&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;max&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;m&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;r&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;np&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;corrcoef&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;A&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;B&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;This gives the result of &lt;strong&gt;m=.00045&lt;/strong&gt; and &lt;strong&gt;r=.01&lt;/strong&gt;. Now, We can correlate these signals by simply rotating the axis which generates a dependence. First, we will create a rotation matrix of 45 degrees, and apply this to our data. Here, a 2x2 matrix is multiplied (using &lt;code class=&quot;highlighter-rouge&quot;&gt;@&lt;/code&gt;) by our row matrix&lt;/p&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;seaborn&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;as&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;sns&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;r&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;np&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;array&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;([[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;np&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;cos&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;45&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;np&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;sin&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;45&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)],[&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;np&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;sin&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;45&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;np&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;cos&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;45&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)]])&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;@&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;np&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;c_&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;A&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;B&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;].&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;T&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;sns&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;jointplot&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'A'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'B'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;data&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;pd&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;DataFrame&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;({&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'A'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;r&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,:],&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'B'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;r&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,:]}))&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;&lt;img src=&quot;/assets/rot_joint_plt.svg&quot; alt=&quot;plt&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;We again calculate our correlation coefficient along with the mutual information!&lt;/p&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kn&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;sklearn&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;feature_selection&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;as&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;fs&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;m&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;fs&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;mutual_info_regression&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;r&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;T&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;r&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,:].&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;T&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;m&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;m&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;max&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;m&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;r&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;np&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;corrcoef&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;A&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;B&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;This gives us the result of &lt;strong&gt;m=.11&lt;/strong&gt; and &lt;strong&gt;r=.84&lt;/strong&gt;! Our intuition should be confirmed! For a more general case, we could consider the overall dependence of these metrics on angle of rotation.&lt;/p&gt;
+
+&lt;h1 id=&quot;example-2-sensitivity-to-rotation&quot;&gt;Example 2: Sensitivity to Rotation&lt;/h1&gt;
+&lt;p&gt;The following code will generate a plot of our metrics based on angle of rotation.&lt;/p&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;A&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;8&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;np&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;random&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;randn&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1000&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;B&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;np&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;random&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;randn&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1000&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;theta&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;np&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;linspace&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;np&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;pi&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;100&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;vals&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;np&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;zeros&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;((&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;100&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;num&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;range&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;len&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;theta&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)):&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;r&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;np&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;array&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;([[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;np&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;cos&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;theta&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;num&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]),&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;np&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;sin&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;theta&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;num&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])],[&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;np&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;sin&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;theta&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;num&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]),&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;np&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;cos&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;theta&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;num&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])]])&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;@&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;np&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;c_&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;A&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;B&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;].&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;T&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;vals&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;num&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;np&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;corrcoef&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;r&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,:],&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;r&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,:])[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;m&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;fs&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;mutual_info_regression&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;r&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;T&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;r&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,:].&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;T&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;vals&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;num&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;m&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;max&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;m&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;plt&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;plot&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;theta&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;180&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;mf&quot;&gt;3.14&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;vals&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;plt&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;grid&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;True&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;&lt;img src=&quot;/assets/MI_vs_Corr_rotation.svg&quot; alt=&quot;plt&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;As you might expect, correlations have a natural depedence on basis you choose to represent your data in! However, M.I. is a much more invariant measure to the particular choice of basis.&lt;/p&gt;
+
+&lt;h1 id=&quot;example-3-dependent-uniform-processes&quot;&gt;Example 3: Dependent Uniform Processes&lt;/h1&gt;
+&lt;p&gt;There are other sorts of distributions we can look at for comparing our two metrics. A common example used to demonstrate the difference between correlation and dependence is a modified uniform distribution. We can create two completely dependent variables from a uniform distribution using the &lt;code class=&quot;highlighter-rouge&quot;&gt;abs()&lt;/code&gt; function&lt;/p&gt;
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;X&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;np&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;random&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;uniform&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;500&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;Y&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;np&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;zeros&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;len&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;X&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;));&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Y&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;X&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;X&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;X&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;];&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Y&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;X&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;X&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;X&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;];&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;sns&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;jointplot&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'X'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'Y'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;data&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;pd&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;DataFrame&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;({&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'X'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;X&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'Y'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Y&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}),&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;xlim&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;&lt;img src=&quot;/assets/uniform_depedent.svg&quot; alt=&quot;plt&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;For this plot, the M.I is 1, but the correlation is &lt;strong&gt;.02&lt;/strong&gt;! Clearly, we see how limited the information correlation gives us is.&lt;/p&gt;
+
+&lt;h1 id=&quot;example-4-spirals&quot;&gt;Example 4: Spirals!!&lt;/h1&gt;
+&lt;p&gt;A fun example of data which from afar looks gaussian but up close isn’t are spirals! To get a general equation for a spiral, we can convert from polar coordinates. A line in polar coordinates:&lt;/p&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;r(\theta) = \theta&lt;/script&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/pol_line.svg&quot; alt=&quot;plt&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;We can then convert this to parametric coordinates and scale the axes seperatly&lt;/p&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;x = .2*t*Cos(t)&lt;/script&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;y = .1*t*Sin(t)&lt;/script&gt;
+
+&lt;p&gt;This now looks like an ellipsoid spiral. We can rotate any parametric equation by an angle &lt;script type=&quot;math/tex&quot;&gt;\theta&lt;/script&gt; using the following equations:&lt;/p&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;u = x Cos(\theta) - y Sin(\theta)&lt;/script&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;v = x Sin(\theta) + y Cos(\theta)&lt;/script&gt;
+
+&lt;p&gt;Applying this transformation we get the following plot&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/rot_pol_line.svg&quot; alt=&quot;plt&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;We can create these data points in python and look at the marginal distributions&lt;/p&gt;
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;theta&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;mf&quot;&gt;3.14&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;4&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;t&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;np&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;arange&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;40&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,.&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt; 
+&lt;span class=&quot;n&quot;&gt;x&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;t&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;np&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;cos&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;t&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;y&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;t&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;np&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;sin&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;t&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;u&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;np&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;cos&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;theta&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;y&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;np&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;sin&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;theta&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;v&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;np&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;sin&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;theta&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;y&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;np&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;cos&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;theta&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;sns&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;jointplot&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;u&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;v&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;&lt;img src=&quot;/assets/spiral_marge.svg&quot; alt=&quot;plt&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Again, we find that the correlation is &lt;strong&gt;.576&lt;/strong&gt; but the M.I is &lt;strong&gt;.02&lt;/strong&gt;. This tells us that mutual information has &lt;strong&gt;missed&lt;/strong&gt; the depedence. However, in the above discussion, we have glossed over a free parameter of the M.I. function in python: the number of nearest neighbors to consider. We can see the best that our function performs by iterating over all values for nearest neighbors.&lt;/p&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;m&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[];&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ind&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[];&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;range&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;80&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;ind&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;append&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;tmp1&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;fs&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;mutual_info_regression&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;u&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;reshape&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;v&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;n_neighbors&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;tmp2&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;fs&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;mutual_info_regression&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;v&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;reshape&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;v&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;n_neighbors&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;m&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;append&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;tmp1&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;tmp2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;plt&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;scatter&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ind&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;m&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;&lt;img src=&quot;/assets/mut_info_nn.svg&quot; alt=&quot;plt&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;We see that there appears to be an upper limit. Another consideration are different symmetric shapes. If we change the parametric parameter to &lt;code class=&quot;highlighter-rouge&quot;&gt;t=np.arrage(0,400,5)&lt;/code&gt; we get the below shape:&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/spiral_marge_2.svg&quot; alt=&quot;plt&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/mut_info_nn2.svg&quot; alt=&quot;plt&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;This shows us the difficulty in finding the proper number of nearest neighbors: For the first case, more neighbors was better. For the second case, it turned out 2 neighbors was optimal!&lt;/p&gt;
+
+&lt;h2 id=&quot;closing-thoughts&quot;&gt;Closing Thoughts&lt;/h2&gt;
+&lt;p&gt;In the above discussion, we looked at some of the underlying differences between PCA and ICA with a focus on what mutual information looks like for some specific pairs of random variables. Like most things in research, I think the results emphasize how important it is to be familiar with your data to know what marginal distributions look like, and how that impacts the results of different dimensionality reduction techniques.&lt;/p&gt;</content><author><name>Stephen Mazurchuk</name></author><summary type="html">While there are many high-level descriptions of both Principle Component Analysis (PCA) and Independent Component Analysis (ICA), I thought I might write about a few key differences to solidify my own understanding. Both PCA and ICA are used as general dimensionality reduction techniques. However, the two methods operate under different assumptions and should not be confused with each other. Common to Both What all decompositions seek to preserve is some distance between all pairs of points. Strictly speaking, this means that for the Euclidean metric, only rotations, flips, and translations are allowed (think all matrices with determinant=+-1). However, if we want to reduce the dimensionality of data, we necessarily need to discard some information. Most often, this corresponds to a linear projection into a subspace. Exactly how to determine which information should be “thrown away” depends on how we construct our projection matrix. This brings us to the two most common techniques PCA Most are familiar with PCA. Given some data that is multi-dimensional, the goal is to reduce the dimensionality of the data while still explaining as much of the variance as possible. In some sense, PCA can be thought of as fitting ellipses to data. Crucial to how PCA explains variance, one can visualize it as finding lines in a high dimensional space in which the data appear very spread out. This approach makes the most intuitive sense when one considers the underling variables of interest as uncorrelated gaussian random variables. This brings us to our first point: PCA performs source separation if the underlying variables are gaussian Point 1: If a signal is assumed to be a linear combination of independent gaussian sources along with gaussian noise, then PCA and ICA optimize the same objective function. This should make sense from what we have just described Corollary The sum of two gaussian random variables is also gaussian! This is important for understanding as it makes clear why PCA amounts to rotation of coordinates. In particular, PCA generates a subspace with orthogonal basis vectors which explain a maximal amount of variance. Assume X and Y are normally distributed variables then: This particular formula requires that the undying variables are uncorrelated, and independent, however these conditions can be relaxed and there is still a similar result. Why PCA works PCA as matrix diagonalization. We know that matrices can be thought of as collections of vectors, and a vector can be thought of as a random variable. So to have two variables be uncorrelated means they have no covariance. But what is covariance? It is a dot product! That illustrates why it is always possible to generate a rotation which uncorrelates the variables!! Say we have N dimensions in our data (often # columns). Taking each column as a vector with u observations (# rows), we know that N independent vectors will at most spread an N dimensional space (even if there u » N observations). We can take each column as a basis for this space, however, there is no reason to think the columns will be orthogonal. However, for any space, we can generate and orthonormal set of basis for the space! One way of doing this which is taught in many intro linear algebra courses is the gram-schmitt method. Gram Schmitt Write about the method here More General This orthognalization is normally done implicitly through SVD decomposition which generates unscaled principal components corresponding to the “left” eigen-vectors ICA Now that we have good hold on PCA, we talk about ICA. First, and perhaps most importantly,Correlation is linear! Variables can be completely dependent (as in example 2), but uncorrelated! To summarize the discussion above, given two random variables, there is always a distance preserving transformation which uncorrelates the variables. Note, this is often called a whitening operation to make variables less co-linear. This is not the case for a different objective called Mutual Information (MI). For a more detailed discussion about what MI is, see my other post on the topic Mutual Information! Avoiding the details of how ICA is implemented, on a high level, a user apriori selects a target dimensionality, and a transfrom matrix is then created (often iteravly) which projects the original data onto a basis where the marginal distributions are as independent as possible (minimize MI of the target basis). We can get a feel for what this means by making some examples. Example 1: Independent Gaussian Processes Let’s generate two independent gaussian variables: import numpy as np A = .8*np.random.randn(1000); B = 3*np.random.randn(1000); We can verify that these distributions are both uncorrelated and independent from sklearn import feature_selection as fs m = fs.mutual_info_regression(np.c_[A,B],B) m = m/max(m); r = np.corrcoef(A,B) This gives the result of m=.00045 and r=.01. Now, We can correlate these signals by simply rotating the axis which generates a dependence. First, we will create a rotation matrix of 45 degrees, and apply this to our data. Here, a 2x2 matrix is multiplied (using @) by our row matrix import seaborn as sns r = np.array([[np.cos(45), np.sin(45)],[-np.sin(45), np.cos(45)]]) @ np.c_[A,B].T sns.jointplot('A','B',data=pd.DataFrame({'A':r[0,:],'B':r[1,:]})) We again calculate our correlation coefficient along with the mutual information! from sklearn import feature_selection as fs m = fs.mutual_info_regression(r.T,r[1,:].T) m = m/max(m); r = np.corrcoef(A,B) This gives us the result of m=.11 and r=.84! Our intuition should be confirmed! For a more general case, we could consider the overall dependence of these metrics on angle of rotation. Example 2: Sensitivity to Rotation The following code will generate a plot of our metrics based on angle of rotation. A = .8*np.random.randn(1000); B = 3*np.random.randn(1000); theta=np.linspace(0,np.pi,100); vals = np.zeros((100,2)) for num in range(len(theta)): r = np.array([[np.cos(theta[num]), np.sin(theta[num])],[-np.sin(theta[num]), np.cos(theta[num])]]) @ np.c_[A,B].T vals[num,0]=np.corrcoef(r[0,:],r[1,:])[0,1] m = fs.mutual_info_regression(r.T,r[1,:].T) vals[num,1]=(m/max(m))[0] plt.plot(theta*180/3.14,vals); plt.grid(True) As you might expect, correlations have a natural depedence on basis you choose to represent your data in! However, M.I. is a much more invariant measure to the particular choice of basis. Example 3: Dependent Uniform Processes There are other sorts of distributions we can look at for comparing our two metrics. A common example used to demonstrate the difference between correlation and dependence is a modified uniform distribution. We can create two completely dependent variables from a uniform distribution using the abs() function X = np.random.uniform(-1,1,500); Y = np.zeros(len(X)); Y[X&amp;lt;0]=-X[X&amp;lt;0]; Y[X&amp;gt;0]=X[X&amp;gt;0]; sns.jointplot('X','Y',data=pd.DataFrame({'X':X,'Y':Y}),xlim=[-1,1]) For this plot, the M.I is 1, but the correlation is .02! Clearly, we see how limited the information correlation gives us is. Example 4: Spirals!! A fun example of data which from afar looks gaussian but up close isn’t are spirals! To get a general equation for a spiral, we can convert from polar coordinates. A line in polar coordinates: We can then convert this to parametric coordinates and scale the axes seperatly This now looks like an ellipsoid spiral. We can rotate any parametric equation by an angle using the following equations: Applying this transformation we get the following plot We can create these data points in python and look at the marginal distributions theta=3.14/4 t = np.arange(0,40,.2); x = .2*t*np.cos(t) y = .1*t*np.sin(t) u = x*np.cos(theta)-y*np.sin(theta); v = x*np.sin(theta)+y*np.cos(theta); sns.jointplot(u,v) Again, we find that the correlation is .576 but the M.I is .02. This tells us that mutual information has missed the depedence. However, in the above discussion, we have glossed over a free parameter of the M.I. function in python: the number of nearest neighbors to consider. We can see the best that our function performs by iterating over all values for nearest neighbors. m=[]; ind=[]; for i in range(1,80): ind.append(i) tmp1 = fs.mutual_info_regression(u.reshape(-1,1),v,n_neighbors=i) tmp2 = fs.mutual_info_regression(v.reshape(-1,1),v,n_neighbors=i) m.append(tmp1/tmp2) plt.scatter(ind,m) We see that there appears to be an upper limit. Another consideration are different symmetric shapes. If we change the parametric parameter to t=np.arrage(0,400,5) we get the below shape: This shows us the difficulty in finding the proper number of nearest neighbors: For the first case, more neighbors was better. For the second case, it turned out 2 neighbors was optimal! Closing Thoughts In the above discussion, we looked at some of the underlying differences between PCA and ICA with a focus on what mutual information looks like for some specific pairs of random variables. Like most things in research, I think the results emphasize how important it is to be familiar with your data to know what marginal distributions look like, and how that impacts the results of different dimensionality reduction techniques.</summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="http://localhost:4000/assets/default-social-image.png" /><media:content medium="image" url="http://localhost:4000/assets/default-social-image.png" xmlns:media="http://search.yahoo.com/mrss/" /></entry><entry><title type="html">Mutual Information</title><link href="http://localhost:4000/2020/02/20/pmi/" rel="alternate" type="text/html" title="Mutual Information" /><published>2020-02-20T00:00:00+00:00</published><updated>2020-02-20T00:00:00+00:00</updated><id>http://localhost:4000/2020/02/20/pmi</id><content type="html" xml:base="http://localhost:4000/2020/02/20/pmi/">&lt;p&gt;Mutual information is a metric used extensively across many fields.&lt;/p&gt;
+
+&lt;h1 id=&quot;intuition&quot;&gt;Intuition&lt;/h1&gt;
+&lt;p&gt;First, prior to talking definitions and nuance, we can get a general sense for what we are trying to measure. Given two sets of observations, we might wonder whether the observations are independent. One indication that they may not be independent is if they are correlated. However, correlation only captures a linear dependence. A more general sense of what is sought is whether knowing the value of observation, provides any information about the value of the second random variable.&lt;/p&gt;
+
+&lt;p&gt;This intuition tells us that for two independent variables, the joint distribution of two variables should simply be the product of the two marginal distributions. Assume for two random variables &lt;strong&gt;A&lt;/strong&gt; and &lt;strong&gt;B&lt;/strong&gt; and observations &lt;script type=&quot;math/tex&quot;&gt;a&lt;/script&gt; and &lt;script type=&quot;math/tex&quot;&gt;b&lt;/script&gt;&lt;/p&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;P_{AB}(a,b) = P_A(a) * P_B(b)&lt;/script&gt;
+
+&lt;p&gt;Equivalently&lt;/p&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;P_{AB}(a | b) = P_A(a)&lt;/script&gt;
+
+&lt;p&gt;This means that two variables are dependent it the above is not the case! In general, our goal is to come up with a method of generating a number (preferably between 0 and 1) which tells us how far away from completely independent two distributions are. Since entropy is designed to be additive between two independent distributions, a metric might &lt;em&gt;feel&lt;/em&gt; something along the lines of the following::&lt;/p&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;I(A,B) = \frac{H(P_{AB})}{H(P_A) + H(P_B)}&lt;/script&gt;
+
+&lt;p&gt;Which might read something along the lines of “The information gain equals the entropy of the joint distribution over the sum of entropies of the marginal distributions”. In this case a value of 1 indicates independence, and values closer two zero indicate more dependence.&lt;/p&gt;
+
+&lt;h1 id=&quot;formal-definition&quot;&gt;Formal Definition&lt;/h1&gt;
+
+&lt;p&gt;Wikipedia gives the following definition:&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;The Mutual Information of two random variables is a measure of the mutual dependence between the two variables.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;For two discrete random variables, it can be calculated as:&lt;/p&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;\operatorname{I}(X;Y) = \sum_{y \in \mathcal Y} \sum_{x \in \mathcal X}
+    { p_{(X,Y)}(x,y) \log{ \left(\frac{p_{(X,Y)}(x,y)}{p_X(x)\,p_Y(y)} \right) }}&lt;/script&gt;
+
+&lt;p&gt;where &lt;script type=&quot;math/tex&quot;&gt;p_{(X,Y)}&lt;/script&gt; is the joint distribution of &lt;script type=&quot;math/tex&quot;&gt;X&lt;/script&gt; and &lt;script type=&quot;math/tex&quot;&gt;Y&lt;/script&gt;, and &lt;script type=&quot;math/tex&quot;&gt;p_X&lt;/script&gt; and &lt;script type=&quot;math/tex&quot;&gt;p_Y&lt;/script&gt; are the marginal probability mass functions of &lt;script type=&quot;math/tex&quot;&gt;X&lt;/script&gt; and &lt;script type=&quot;math/tex&quot;&gt;Y&lt;/script&gt; respectively &lt;sup id=&quot;fnref:1&quot;&gt;&lt;a href=&quot;#fn:1&quot; class=&quot;footnote&quot;&gt;1&lt;/a&gt;&lt;/sup&gt;&lt;/p&gt;
+
+&lt;p&gt;This definition seems easy enough to apply. However, one thing which one quickly realizes when using this metric is that calculating the probability mass(or density) functions requires picking a bin size (or kernel smoothing parameter)! One might notice this and hope that there is a quick and natural choice, or that bin size doesn’t change the results too much, but unfortunately, neither of those things are the case!&lt;/p&gt;
+
+&lt;h2 id=&quot;matlab-implementation&quot;&gt;Matlab Implementation&lt;/h2&gt;
+&lt;p&gt;Following the above definition, I wrote some code to calculate the mutual information for two random variables (A and B):&lt;/p&gt;
+
+&lt;div class=&quot;language-matlab highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;n&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;6&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;% # of bins for making PMF&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;g1&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;histcounts&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;A&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;n&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;% Bin the data&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;g2&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;histcounts&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;B&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;n&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;g3&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;histcounts2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;A&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;B&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;n&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;pmf1&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;repmat&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;g1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;sum&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;g1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;n&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;% change counts to %, and make grid for sum&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;pmf2&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;repmat&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;((&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;g2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;sum&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;g2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;n&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;pmf3&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;g3&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;sum&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;g3&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(:));&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;pmf1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;pmf3&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;==&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[];&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;pmf2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;pmf3&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;==&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[];&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;pmf3&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;pmf3&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;==&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[];&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;% remove 0 entries&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;MI&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;sum&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;pmf3&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.*&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;log&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;pmf3&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;/(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;pmf1&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;pmf2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)))&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;% Calculate MI score&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;Note, I naively choose to uniform number and spacing of bins. From here we can generate some test data and see the results!&lt;/p&gt;
+
+&lt;h1 id=&quot;circle&quot;&gt;Circle&lt;/h1&gt;
+
+&lt;h1 id=&quot;bin-spacing-modification&quot;&gt;Bin Spacing Modification&lt;/h1&gt;
+&lt;p&gt;It is important to note that to give our algorithm the best chance of success, I use non-uniform bin size with bins chosen from the joint distribution. We can look at the dependence on the bin size&lt;/p&gt;
+
+&lt;h2 id=&quot;knn-approach&quot;&gt;KNN Approach&lt;/h2&gt;
+
+&lt;h2 id=&quot;applications&quot;&gt;Applications&lt;/h2&gt;
+
+&lt;p&gt;A 2018 paper which I personally think is fascinating makes the claim that:&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;Framing word embedding as &lt;em&gt;metric recovery&lt;/em&gt; of a semantic space unifies existing word embedding algorithms, ties them to manifold learning, and demonstrates that existing algorithms are consistent metric recovery methods given co-occurrence counts from random walks. &lt;sup id=&quot;fnref:2&quot;&gt;&lt;a href=&quot;#fn:2&quot; class=&quot;footnote&quot;&gt;2&lt;/a&gt;&lt;/sup&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;The connection between metric recovery and mutual information is that a seminal paper demonstrated that human word ratings are linearly related to many distributionaly derived pointwise mutual information (PMI) &lt;sup id=&quot;fnref:3&quot;&gt;&lt;a href=&quot;#fn:3&quot; class=&quot;footnote&quot;&gt;3&lt;/a&gt;&lt;/sup&gt;. Following this motivation, the paper mentions how in recent times, it has been shown that many current distributional models are related to eachother through PMI. To quote the paper:&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;In terms of algorithms, Levy and Goldberg (2014b) demonstrated that the global minimum of the skip-gram method with negative sampling of Mikolov et al. (2013b) implicitly factorizes a shifted version of the PMI matrix of word-context pairs.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;I mention these results here because I think that with the prevalence of interesting results using mutual information in so many fields, we should be aware of the nuance in actually calculating its value!&lt;/p&gt;
+
+&lt;h1 id=&quot;references&quot;&gt;References&lt;/h1&gt;
+&lt;div class=&quot;footnotes&quot;&gt;
+  &lt;ol&gt;
+    &lt;li id=&quot;fn:1&quot;&gt;
+      &lt;p&gt;&lt;a href=&quot;https://en.wikipedia.org/wiki/Mutual_information#In_terms_of_PMFs_for_discrete_distributions&quot;&gt;https://en.wikipedia.org/wiki/Mutual_information#In_terms_of_PMFs_for_discrete_distributions&lt;/a&gt; &lt;a href=&quot;#fnref:1&quot; class=&quot;reversefootnote&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
+    &lt;/li&gt;
+    &lt;li id=&quot;fn:2&quot;&gt;
+      &lt;p&gt;Hashimoto, T. B., Alvarez-Melis, D., &amp;amp; Jaakkola, T. S. (2018). Word Embeddings as Metric Recovery in Semantic Spaces. Transactions of the Association for Computational Linguistics, 4, 273–286. doi: 10.1162/tacl_a_00098 &lt;a href=&quot;#fnref:2&quot; class=&quot;reversefootnote&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
+    &lt;/li&gt;
+    &lt;li id=&quot;fn:3&quot;&gt;
+      &lt;p&gt;Kenneth Ward Church andPatrick Hanks. 1990. Word association norms, mutual information, and lexicography.Comput. Linguist.,16(1):22–29 &lt;a href=&quot;#fnref:3&quot; class=&quot;reversefootnote&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
+    &lt;/li&gt;
+  &lt;/ol&gt;
+&lt;/div&gt;</content><author><name>Stephen Mazurchuk</name></author><summary type="html">Mutual information is a metric used extensively across many fields. Intuition First, prior to talking definitions and nuance, we can get a general sense for what we are trying to measure. Given two sets of observations, we might wonder whether the observations are independent. One indication that they may not be independent is if they are correlated. However, correlation only captures a linear dependence. A more general sense of what is sought is whether knowing the value of observation, provides any information about the value of the second random variable. This intuition tells us that for two independent variables, the joint distribution of two variables should simply be the product of the two marginal distributions. Assume for two random variables A and B and observations and Equivalently This means that two variables are dependent it the above is not the case! In general, our goal is to come up with a method of generating a number (preferably between 0 and 1) which tells us how far away from completely independent two distributions are. Since entropy is designed to be additive between two independent distributions, a metric might feel something along the lines of the following:: Which might read something along the lines of “The information gain equals the entropy of the joint distribution over the sum of entropies of the marginal distributions”. In this case a value of 1 indicates independence, and values closer two zero indicate more dependence. Formal Definition Wikipedia gives the following definition: The Mutual Information of two random variables is a measure of the mutual dependence between the two variables. For two discrete random variables, it can be calculated as: where is the joint distribution of and , and and are the marginal probability mass functions of and respectively 1 This definition seems easy enough to apply. However, one thing which one quickly realizes when using this metric is that calculating the probability mass(or density) functions requires picking a bin size (or kernel smoothing parameter)! One might notice this and hope that there is a quick and natural choice, or that bin size doesn’t change the results too much, but unfortunately, neither of those things are the case! Matlab Implementation Following the above definition, I wrote some code to calculate the mutual information for two random variables (A and B): n=6; % # of bins for making PMF g1 = histcounts(A,n); % Bin the data g2 = histcounts(B,n); g3 = histcounts2(A,B,n); pmf1 = repmat(g1/sum(g1),n,1); % change counts to %, and make grid for sum pmf2 = repmat((g2/sum(g2))',1,n); pmf3 = g3/sum(g3(:)); pmf1(pmf3==0)=[]; pmf2(pmf3==0)=[]; pmf3(pmf3==0)=[]; % remove 0 entries MI = sum(pmf3.*log(pmf3./(pmf1.*pmf2))) % Calculate MI score Note, I naively choose to uniform number and spacing of bins. From here we can generate some test data and see the results! Circle Bin Spacing Modification It is important to note that to give our algorithm the best chance of success, I use non-uniform bin size with bins chosen from the joint distribution. We can look at the dependence on the bin size KNN Approach Applications A 2018 paper which I personally think is fascinating makes the claim that: Framing word embedding as metric recovery of a semantic space unifies existing word embedding algorithms, ties them to manifold learning, and demonstrates that existing algorithms are consistent metric recovery methods given co-occurrence counts from random walks. 2 The connection between metric recovery and mutual information is that a seminal paper demonstrated that human word ratings are linearly related to many distributionaly derived pointwise mutual information (PMI) 3. Following this motivation, the paper mentions how in recent times, it has been shown that many current distributional models are related to eachother through PMI. To quote the paper: In terms of algorithms, Levy and Goldberg (2014b) demonstrated that the global minimum of the skip-gram method with negative sampling of Mikolov et al. (2013b) implicitly factorizes a shifted version of the PMI matrix of word-context pairs. I mention these results here because I think that with the prevalence of interesting results using mutual information in so many fields, we should be aware of the nuance in actually calculating its value! References https://en.wikipedia.org/wiki/Mutual_information#In_terms_of_PMFs_for_discrete_distributions &amp;#8617; Hashimoto, T. B., Alvarez-Melis, D., &amp;amp; Jaakkola, T. S. (2018). Word Embeddings as Metric Recovery in Semantic Spaces. Transactions of the Association for Computational Linguistics, 4, 273–286. doi: 10.1162/tacl_a_00098 &amp;#8617; Kenneth Ward Church andPatrick Hanks. 1990. Word association norms, mutual information, and lexicography.Comput. Linguist.,16(1):22–29 &amp;#8617;</summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="http://localhost:4000/assets/default-social-image.png" /><media:content medium="image" url="http://localhost:4000/assets/default-social-image.png" xmlns:media="http://search.yahoo.com/mrss/" /></entry><entry><title type="html">Word Meanings Through Analogies</title><link href="http://localhost:4000/2020/02/20/assimilies/" rel="alternate" type="text/html" title="Word Meanings Through Analogies" /><published>2020-02-20T00:00:00+00:00</published><updated>2020-02-20T00:00:00+00:00</updated><id>http://localhost:4000/2020/02/20/assimilies</id><content type="html" xml:base="http://localhost:4000/2020/02/20/assimilies/">&lt;p&gt;When I first learned about the ability of distributionally derived word representations to complete analogies I was very surprised. I thought, “surely we are on the cusp of deeply understanding language”. I think that sometimes we get so used to common knowledge that it looses some of its wonder. Why should distributional models perform well at analogies? Shouldn’t analogies be a generally difficult task which require deep understanding? Surely completing analogies requires at least as much semantic information (if not more) as assigning pronouns to their proper referent?&lt;/p&gt;
+
+&lt;p&gt;Of course, the field of linguistics has recognized the somewhat counter intuitive result that in-fact the reverse is true. It is surprisingly hard to assign roles to pronouns, but word-ratings have been shown to be capable of completing analogies since the 1970’s! (source)&lt;/p&gt;
+
+&lt;h2 id=&quot;winograd-schemas&quot;&gt;Winograd Schemas&lt;/h2&gt;
+
+&lt;p&gt;The &lt;a href=&quot;https://en.wikipedia.org/wiki/Winograd_Schema_Challenge&quot;&gt;Winograd Schema Challenge&lt;/a&gt; (WSC) is a test of machine intelligence that was proposed by Hector Levesque (UoT). Roughly, it is a pair of sentences which contain two noun phrases and an ambiguous pronoun which refers to different noun-phrases in the sentences. The prototypical example is given below:&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;The city councilmen refused the demonstrators a permit because they feared violence.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;In asking who &lt;em&gt;they&lt;/em&gt; refers to, it seems a rather simplistic task to assign it to &lt;em&gt;the committee&lt;/em&gt;. However, by just changing the last words, we can change the role asignment&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;The city councilmen refused the demonstrators a permit because they advocated violence.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;This demonstrates that what might seem a simple task which can simply be answered through syntactic regularities of language, actually requires understanding the semantics of the sentence.&lt;/p&gt;
+
+&lt;h2 id=&quot;motivation&quot;&gt;Motivation&lt;/h2&gt;
+
+&lt;p&gt;So, why did I reference analogies and Winograd schemas? Well, it is motivated by the success of word rating models at solving analogies. My hunch is that&lt;/p&gt;
+
+&lt;h2 id=&quot;looking-for-analogies&quot;&gt;Looking for Analogies&lt;/h2&gt;
+&lt;p&gt;Following this line of thought, I considered whether we could derive word meanings through the use of assimilies in literature. For example, the sentence&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;He was fast like a cheetah&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;Tells us a prototypical feature of cheetahs; namely, that they are fast! In general, I considered whether looking for phrases such as “like a” followed by a noun to be able to give insight to the prototypical features we have for different objects. To this end, I searched 16,000 free eBooks for “like a”&lt;/p&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;string&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;like a&quot;&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;sentences&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;os&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;popen&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'grep -r -i -w -h &quot;'&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;string&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'&quot;'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;).&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;read&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;().&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;splitlines&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;This command found 490,000 examples. So, just randomly clicking through them, what are the examples?&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;Make me a offer, Mister Beeler. I’d like a offer if you’d care to make one&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;Not quite what I had hoped. The first example uses the work in a literal sense!&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;and Jean Claude would retreat like a disparaged puppy&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;A puppy retreating? I think puppies are cute and innocent, hardly disparaging or retreating&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;spires that reached to the heaven like a cathedral of praise, bringing symmetry to its background&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;Cathedrals, reaching. Okay, maybe, but still, pretty hard.&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;tool that the creature Fur-nose carried, like a rock used for opening nuts&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;One thing that seems to be a trend is that it is not always clear what adjective is referencing the noun following “like a”. If we are to have any hope, we will require a syntatic depedency parser.&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;Together they watched Paul flitting ahead like a human dragonfly&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;Here, what the noun should be is not very clear! We clearly know that it should be &lt;em&gt;dragonfly&lt;/em&gt;, but that is because we recognize &lt;em&gt;human&lt;/em&gt; as an adjective and not noun.&lt;/p&gt;
+
+&lt;p&gt;With everything above given, I picked some of the more random examples. There are many examples for which the assimily was clear. For fun, some are included here:&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;The apartment was furnished, but it didn’t look like a home&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;This tells that “look” is strongly associated with home! This is great!&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;We continued going until we arrived at an open place like a plateau with many chambers&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h1 id=&quot;as-a&quot;&gt;“As a”&lt;/h1&gt;
+
+&lt;p&gt;For the other kind of simily, we find a similar number of raw occurences of “as a”. In looking at the examples, some are:&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;“I’m not sure,” she said. “I usually read them as a set, not as individual”&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;Here we have a tricky assignment. Are sets (a rather abstract concept) usually visual (as would be indicated by &lt;em&gt;read&lt;/em&gt;)?&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;Tenderness in a man is not viewed as a manly thing&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;Oooo, here he have a negation. Another tricky case I had not considered! Not to mention, how should “thing” be handled?&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;“You served as a vassal of the Queen in my childhood,” Headred said&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;Here I have included a positive example. Vassals serve!&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;and blow up a transformer without so much as a scratch?” Dodger asked&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;How would we handle common phrases such as “without so much …”. A tricky problem indeed. On top of the examples given above, one final tantelizing example was:&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;as ever-present as a heartbeat&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;I think that this does tell us something deep about how we represent the concept “heartbeat”. But how is it captured?&lt;/p&gt;
+
+&lt;p&gt;There is an interesting idea that we might learn about abstract concepts through the use of metaphors. Metaphores allow us to extend our embdied knowledge in useful ways. Maybe we can come up with a Reg-Ex expression to search for metaphores. This is i&lt;/p&gt;</content><author><name>Stephen Mazurchuk</name></author><summary type="html">When I first learned about the ability of distributionally derived word representations to complete analogies I was very surprised. I thought, “surely we are on the cusp of deeply understanding language”. I think that sometimes we get so used to common knowledge that it looses some of its wonder. Why should distributional models perform well at analogies? Shouldn’t analogies be a generally difficult task which require deep understanding? Surely completing analogies requires at least as much semantic information (if not more) as assigning pronouns to their proper referent? Of course, the field of linguistics has recognized the somewhat counter intuitive result that in-fact the reverse is true. It is surprisingly hard to assign roles to pronouns, but word-ratings have been shown to be capable of completing analogies since the 1970’s! (source) Winograd Schemas The Winograd Schema Challenge (WSC) is a test of machine intelligence that was proposed by Hector Levesque (UoT). Roughly, it is a pair of sentences which contain two noun phrases and an ambiguous pronoun which refers to different noun-phrases in the sentences. The prototypical example is given below: The city councilmen refused the demonstrators a permit because they feared violence. In asking who they refers to, it seems a rather simplistic task to assign it to the committee. However, by just changing the last words, we can change the role asignment The city councilmen refused the demonstrators a permit because they advocated violence. This demonstrates that what might seem a simple task which can simply be answered through syntactic regularities of language, actually requires understanding the semantics of the sentence. Motivation So, why did I reference analogies and Winograd schemas? Well, it is motivated by the success of word rating models at solving analogies. My hunch is that Looking for Analogies Following this line of thought, I considered whether we could derive word meanings through the use of assimilies in literature. For example, the sentence He was fast like a cheetah Tells us a prototypical feature of cheetahs; namely, that they are fast! In general, I considered whether looking for phrases such as “like a” followed by a noun to be able to give insight to the prototypical features we have for different objects. To this end, I searched 16,000 free eBooks for “like a” string = &quot;like a&quot; sentences = os.popen('grep -r -i -w -h &quot;'+ string + '&quot;').read().splitlines() This command found 490,000 examples. So, just randomly clicking through them, what are the examples? Make me a offer, Mister Beeler. I’d like a offer if you’d care to make one Not quite what I had hoped. The first example uses the work in a literal sense! and Jean Claude would retreat like a disparaged puppy A puppy retreating? I think puppies are cute and innocent, hardly disparaging or retreating spires that reached to the heaven like a cathedral of praise, bringing symmetry to its background Cathedrals, reaching. Okay, maybe, but still, pretty hard. tool that the creature Fur-nose carried, like a rock used for opening nuts One thing that seems to be a trend is that it is not always clear what adjective is referencing the noun following “like a”. If we are to have any hope, we will require a syntatic depedency parser. Together they watched Paul flitting ahead like a human dragonfly Here, what the noun should be is not very clear! We clearly know that it should be dragonfly, but that is because we recognize human as an adjective and not noun. With everything above given, I picked some of the more random examples. There are many examples for which the assimily was clear. For fun, some are included here: The apartment was furnished, but it didn’t look like a home This tells that “look” is strongly associated with home! This is great! We continued going until we arrived at an open place like a plateau with many chambers “As a” For the other kind of simily, we find a similar number of raw occurences of “as a”. In looking at the examples, some are: “I’m not sure,” she said. “I usually read them as a set, not as individual” Here we have a tricky assignment. Are sets (a rather abstract concept) usually visual (as would be indicated by read)? Tenderness in a man is not viewed as a manly thing Oooo, here he have a negation. Another tricky case I had not considered! Not to mention, how should “thing” be handled? “You served as a vassal of the Queen in my childhood,” Headred said Here I have included a positive example. Vassals serve! and blow up a transformer without so much as a scratch?” Dodger asked How would we handle common phrases such as “without so much …”. A tricky problem indeed. On top of the examples given above, one final tantelizing example was: as ever-present as a heartbeat I think that this does tell us something deep about how we represent the concept “heartbeat”. But how is it captured? There is an interesting idea that we might learn about abstract concepts through the use of metaphors. Metaphores allow us to extend our embdied knowledge in useful ways. Maybe we can come up with a Reg-Ex expression to search for metaphores. This is i</summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="http://localhost:4000/assets/default-social-image.png" /><media:content medium="image" url="http://localhost:4000/assets/default-social-image.png" xmlns:media="http://search.yahoo.com/mrss/" /></entry><entry><title type="html">Distance Metrics and Noise</title><link href="http://localhost:4000/2020/01/16/noisy-distances/" rel="alternate" type="text/html" title="Distance Metrics and Noise" /><published>2020-01-16T00:00:00+00:00</published><updated>2020-01-16T00:00:00+00:00</updated><id>http://localhost:4000/2020/01/16/noisy-distances</id><content type="html" xml:base="http://localhost:4000/2020/01/16/noisy-distances/">&lt;p&gt;Representational Similarity Analysis (RSA) is a widely used data analysis method used in fMRI. It is a form of Multi-Voxel Pattern Analysis (MVPA). In essence, it utilizes dissimilarity matrices to whether two datasets are expressing the same underlying information. Critical to this method is the underlying choice of distance metrics.&lt;/p&gt;
+
+&lt;p&gt;There are many ways to calculate ‘Distances’ between two vectors. Some of the most familiar are euclidean, correlation, and others. In Kriegesckorte’s original paper, he reccomends using the Mahalanobis distance.&lt;/p&gt;
+
+&lt;h2 id=&quot;distance-metrics&quot;&gt;Distance Metrics&lt;/h2&gt;
+
+&lt;p&gt;Starting broadly, in mathematics a &lt;em&gt;metric&lt;/em&gt; is a function that defines a distance (~mapping to the reals) between each pair of elements of a set which meets 4 conditions. The details of this are outside the scope of this post, but it is worth pointing out that the metrics of most common study are of a bilinear form and are called &lt;a href=&quot;https://en.wikipedia.org/wiki/Metric_tensor&quot;&gt;&lt;em&gt;Metric Tensors&lt;/em&gt;&lt;/a&gt;. This means that the metric follows a general form of:&lt;/p&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;B(\bf{v},\bf{w}) = x^{T}Ay&lt;/script&gt;
+
+&lt;h1 id=&quot;cross-validated-mahalanobis&quot;&gt;Cross-Validated Mahalanobis&lt;/h1&gt;
+&lt;p&gt;The central idea that underlies cross-validated mahalanobis is that you have &lt;strong&gt;2 estimates&lt;/strong&gt; of the difference between the vectors. I wrote a matlab script to calculate the cross-validated mahalanobis distance between points in the presence of noise.&lt;/p&gt;
+
+&lt;div class=&quot;language-matlab highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;X&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;5&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;rand&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;100&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;20&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;      &lt;span class=&quot;c1&quot;&gt;% Generate 100, 20 dimensional points (true signal)&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;s1&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;X&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;randn&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;100&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;20&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;    &lt;span class=&quot;c1&quot;&gt;% Add normally distributed noise to signal&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;s2&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;X&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;randn&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;100&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;20&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;    &lt;span class=&quot;c1&quot;&gt;% Add normally distributed noise to signal&lt;/span&gt;
+
+&lt;span class=&quot;n&quot;&gt;s1&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;s1&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;cov&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;s1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;^&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;));&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;% Normalize signal by covariance matrix&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;s2&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;s2&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;cov&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;s2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;^&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;));&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;% Normalize signal by covariance matrix&lt;/span&gt;
+
+&lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;j&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;100&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;k&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;100&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;d&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;j&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;k&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;s1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;j&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,:)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;s1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;k&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,:))&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;s2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;j&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,:)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;s2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;k&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,:))&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;% Calculate pairwise distance matrix&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
+
+&lt;span class=&quot;n&quot;&gt;estimated_distance&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;d&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;tril&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;ones&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;size&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;d&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;));&lt;/span&gt;  &lt;span class=&quot;c1&quot;&gt;% Get just the lower triangular part&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;true_distance&lt;/span&gt;      &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;pdist&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;X&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'mahalanobis'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h2 id=&quot;examples&quot;&gt;Examples&lt;/h2&gt;
+
+&lt;p&gt;Here, I used Matlab to get a better feel for how these metrics respond to noise. The first major point is that &lt;strong&gt;most&lt;/strong&gt; distance metrics &lt;strong&gt;overestimate&lt;/strong&gt; distances in the presence of noise. An exception to this rule is the cross-validated Mahalanobis distance.&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;/assets/est_dist_w_noise.svg&quot;&gt; &lt;img src=&quot;/assets/est_dist_w_noise.svg&quot; alt=&quot;&quot; /&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p align=&quot;center&quot;&gt;&lt;em&gt; We can see that euclidean distance OVER estimates with noise, but other distance metrics are less sensitive to noise &lt;/em&gt;&lt;/p&gt;
+
+&lt;p&gt;While there is a clear difference between some of the distance metrics, we might wonder if this makes a difference? To do this, we can perform a mantel test on dissimilarity matrices produced from pure signal, and in the presence of noise.&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;/assets/mantel_with_noise.svg&quot;&gt; &lt;img src=&quot;/assets/mantel_with_noise.svg&quot; alt=&quot;&quot; /&gt; &lt;/a&gt;&lt;/p&gt;
+&lt;p align=&quot;center&quot;&gt;&lt;em&gt; Mantel test in the presence of noise. It is important to note that there are TWICE as many measurements that go into the cross-validated distance metrics as compared to the other distances &lt;/em&gt;&lt;/p&gt;
+
+&lt;p&gt;We can see noise seperates out the metrics. We see that the euclidean distance over-estimates distances in the presence of noise, it strongly outperforms pearson correlation. Standardized euclidean happens to give identical results as cosine for our particular toy data. We also see that for our purposes, general mahalanobis performs the same as euclidean or cosine.&lt;/p&gt;
+
+&lt;p&gt;A matlab script which will generate these two figures can be found here:&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://github.com/smazurchuk/smazurchuk.github.io/blob/master/assets/dist_analysis.m&quot;&gt;Distance Analysis&lt;/a&gt;&lt;/p&gt;</content><author><name>Stephen Mazurchuk</name></author><summary type="html">Representational Similarity Analysis (RSA) is a widely used data analysis method used in fMRI. It is a form of Multi-Voxel Pattern Analysis (MVPA). In essence, it utilizes dissimilarity matrices to whether two datasets are expressing the same underlying information. Critical to this method is the underlying choice of distance metrics. There are many ways to calculate ‘Distances’ between two vectors. Some of the most familiar are euclidean, correlation, and others. In Kriegesckorte’s original paper, he reccomends using the Mahalanobis distance. Distance Metrics Starting broadly, in mathematics a metric is a function that defines a distance (~mapping to the reals) between each pair of elements of a set which meets 4 conditions. The details of this are outside the scope of this post, but it is worth pointing out that the metrics of most common study are of a bilinear form and are called Metric Tensors. This means that the metric follows a general form of: Cross-Validated Mahalanobis The central idea that underlies cross-validated mahalanobis is that you have 2 estimates of the difference between the vectors. I wrote a matlab script to calculate the cross-validated mahalanobis distance between points in the presence of noise. X = 5*rand(100,20); % Generate 100, 20 dimensional points (true signal) s1 = X+randn(100,20); % Add normally distributed noise to signal s2 = X+randn(100,20); % Add normally distributed noise to signal s1 = s1*(cov(s1)^(-1/2)); % Normalize signal by covariance matrix s2 = s2*(cov(s2)^(-1/2)); % Normalize signal by covariance matrix for j=1:100 for k=1:100 d(j,k) = (s1(j,:)-s1(k,:))*(s2(j,:)-s2(k,:))'; % Calculate pairwise distance matrix end end estimated_distance = d(tril(ones(size(d)) == 1, -1)); % Get just the lower triangular part true_distance = pdist(X, 'mahalanobis'); Examples Here, I used Matlab to get a better feel for how these metrics respond to noise. The first major point is that most distance metrics overestimate distances in the presence of noise. An exception to this rule is the cross-validated Mahalanobis distance. We can see that euclidean distance OVER estimates with noise, but other distance metrics are less sensitive to noise While there is a clear difference between some of the distance metrics, we might wonder if this makes a difference? To do this, we can perform a mantel test on dissimilarity matrices produced from pure signal, and in the presence of noise. Mantel test in the presence of noise. It is important to note that there are TWICE as many measurements that go into the cross-validated distance metrics as compared to the other distances We can see noise seperates out the metrics. We see that the euclidean distance over-estimates distances in the presence of noise, it strongly outperforms pearson correlation. Standardized euclidean happens to give identical results as cosine for our particular toy data. We also see that for our purposes, general mahalanobis performs the same as euclidean or cosine. A matlab script which will generate these two figures can be found here: Distance Analysis</summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="http://localhost:4000/assets/default-social-image.png" /><media:content medium="image" url="http://localhost:4000/assets/default-social-image.png" xmlns:media="http://search.yahoo.com/mrss/" /></entry><entry><title type="html">The ‘Topy’ of Language</title><link href="http://localhost:4000/2020/01/14/somatotopy-language/" rel="alternate" type="text/html" title="The 'Topy' of Language" /><published>2020-01-14T00:00:00+00:00</published><updated>2020-01-14T00:00:00+00:00</updated><id>http://localhost:4000/2020/01/14/somatotopy-language</id><content type="html" xml:base="http://localhost:4000/2020/01/14/somatotopy-language/">&lt;p&gt;I thought I might make a post of an idea that has been circulating in my head this past week. The idea centers on extending what somatopy, retinotopy, and tonotopy imply for concept representation.&lt;/p&gt;
+
+&lt;h2 id=&quot;background&quot;&gt;Background&lt;/h2&gt;
+&lt;p&gt;Somatotopy is known to exist throughout many regions of the brain. Classically, we know about the humunculus in the motor gyrus, but it is a much more general theme that neurons close together in the cortex tend to represent similar things. For a more formal definition of somatotopy, we can define it as:&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;Somatotopy is the point-for-point correspondence of an area of the body to a specific point on the central nervous system &lt;sup id=&quot;fnref:1&quot;&gt;&lt;a href=&quot;#fn:1&quot; class=&quot;footnote&quot;&gt;1&lt;/a&gt;&lt;/sup&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;Practically speaking, this generalizes to the retina and cochlea resulting in respective retinotopic and tonotopic maps. These maps can be explored through functional imaging as shown in the figures below:&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/phase_gif.gif&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+&lt;p align=&quot;center&quot;&gt;&lt;em&gt;Polar angle represented across the visual cortex&lt;/em&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/down_sweep.gif&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+&lt;p align=&quot;center&quot;&gt;&lt;em&gt; Demonstrates a down-sweep of tones &lt;/em&gt;&lt;/p&gt;
+
+&lt;p&gt;Both of these examples are taken from the website of &lt;a href=&quot;http://www.cogsci.ucsd.edu/~sereno/&quot;&gt;Marty Sereno&lt;/a&gt;. A general question is:&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;Are there parameters which vary continuously vary in the language system?&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;If there are, how might we go about finding and exploring them?&lt;/p&gt;
+
+&lt;h2 id=&quot;general-approach&quot;&gt;General Approach&lt;/h2&gt;
+&lt;p&gt;What is described above can also be thought of as a degree for the system. In the visual cortex, the two largest of degrees of freedom would (hopefully) be &lt;em&gt;eccentricity&lt;/em&gt; and &lt;em&gt;angle&lt;/em&gt;. The general problem of finding degrees of freedom for a system corresponds to dimensionality reduction. In most cases, we are interested in non-linear dimensionality reduction, for which many algorithms exist. One of the most common techniques is known as diffusion mapping, so we might try to recover eccentricity and angle in the visual cortex using this method.&lt;/p&gt;
+
+&lt;h1 id=&quot;dataset&quot;&gt;Dataset&lt;/h1&gt;
+
+&lt;h2 id=&quot;language-system&quot;&gt;Language System&lt;/h2&gt;
+&lt;p&gt;For a general idea of which parts of the brain are involved in concept representation, we can look at computer-generated meta-analysis found at &lt;a href=&quot;https://neurosynth.org/analyses/terms/language/&quot;&gt;NeuroSynth&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://neurosynth.org/analyses/terms/language/&quot;&gt;&lt;img src=&quot;/assets/lang_neurosynth.png&quot; alt=&quot;&quot; /&gt;&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;We can use this mask to select voxels of interest in MNI space. This list of masked &lt;script type=&quot;math/tex&quot;&gt;\beta&lt;/script&gt;-values can then be thought of as a vector for which we can look as the question:&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;Are there any continuous degrees of freedom exhibited by the collection of vectors?&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;To do this in python, first, all the t-scores were converted into MNI space, and then the neurosynth mask was scaled and applied to the voxels.&lt;/p&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;os&lt;/span&gt;
+&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;numpy&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;as&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;np&lt;/span&gt;
+&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;subprocess&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;as&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;sp&lt;/span&gt;
+&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;nibabel&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;as&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;nib&lt;/span&gt;
+
+&lt;span class=&quot;n&quot;&gt;langMask&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;nib&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;load&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'language_association-test_z_FDR_0.01.nii.gz'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;#Neurosynth-Mask
+&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;volnames&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;list&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;set&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;([&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;k&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;rsplit&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'.'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;k&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;os&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;listdir&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'alignedData'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)]))&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;wordLabels&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[];&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;patLabel&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[];&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;wordVecs&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[]&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;vol&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;volnames&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;g&lt;/span&gt;    &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;nib&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;load&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'alignedData/'&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;vol&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'.HEAD'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;gg&lt;/span&gt;   &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;nib&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;brikhead&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;AFNIHeader&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;nib&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;brikhead&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;parse_AFNI_header&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'alignedData/'&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;vol&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'.HEAD'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;wordLabels&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;extend&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;gg&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;get_volume_labels&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;());&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;patLabel&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;extend&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;([&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;vol&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;rsplit&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'.'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]]&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;320&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;resamp_mask&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;nil&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;image&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;resample_to_img&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;langMask&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;g&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;wordVecs&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;append&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;g&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;get_fdata&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;resamp_mask&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;dataobj&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,:].&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;T&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;#Threshold neurosynth mask at Z&amp;gt;2
+&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;allVecs&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;np&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;concatenate&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;wordVecs&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;axis&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;The result of this is a 34,000 dimensional vector for &lt;strong&gt;each word&lt;/strong&gt; in &lt;strong&gt;each patient&lt;/strong&gt; which gives us a data matrix of &lt;strong&gt;[7,000 by 34,000]&lt;/strong&gt;. This can then be analyzed using dimensionality reduction techniques such as PCA, tSNE, and Diffusion mapping. Unfortunately, after running these analysis, there was no ‘naturual’ ordering to the words, so for the moment, this is where my analysis ends.&lt;/p&gt;
+
+&lt;h1 id=&quot;references&quot;&gt;References&lt;/h1&gt;
+&lt;div class=&quot;footnotes&quot;&gt;
+  &lt;ol&gt;
+    &lt;li id=&quot;fn:1&quot;&gt;
+      &lt;p&gt;Saladin, Kenneth (2012). Anatomy and Physiology. New York: McGraw Hill. pp. 541, 542. &lt;a href=&quot;#fnref:1&quot; class=&quot;reversefootnote&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
+    &lt;/li&gt;
+  &lt;/ol&gt;
+&lt;/div&gt;</content><author><name>Stephen Mazurchuk</name></author><summary type="html">I thought I might make a post of an idea that has been circulating in my head this past week. The idea centers on extending what somatopy, retinotopy, and tonotopy imply for concept representation. Background Somatotopy is known to exist throughout many regions of the brain. Classically, we know about the humunculus in the motor gyrus, but it is a much more general theme that neurons close together in the cortex tend to represent similar things. For a more formal definition of somatotopy, we can define it as: Somatotopy is the point-for-point correspondence of an area of the body to a specific point on the central nervous system 1 Practically speaking, this generalizes to the retina and cochlea resulting in respective retinotopic and tonotopic maps. These maps can be explored through functional imaging as shown in the figures below: Polar angle represented across the visual cortex Demonstrates a down-sweep of tones Both of these examples are taken from the website of Marty Sereno. A general question is: Are there parameters which vary continuously vary in the language system? If there are, how might we go about finding and exploring them? General Approach What is described above can also be thought of as a degree for the system. In the visual cortex, the two largest of degrees of freedom would (hopefully) be eccentricity and angle. The general problem of finding degrees of freedom for a system corresponds to dimensionality reduction. In most cases, we are interested in non-linear dimensionality reduction, for which many algorithms exist. One of the most common techniques is known as diffusion mapping, so we might try to recover eccentricity and angle in the visual cortex using this method. Dataset Language System For a general idea of which parts of the brain are involved in concept representation, we can look at computer-generated meta-analysis found at NeuroSynth. We can use this mask to select voxels of interest in MNI space. This list of masked -values can then be thought of as a vector for which we can look as the question: Are there any continuous degrees of freedom exhibited by the collection of vectors? To do this in python, first, all the t-scores were converted into MNI space, and then the neurosynth mask was scaled and applied to the voxels. import os import numpy as np import subprocess as sp import nibabel as nib langMask = nib.load('language_association-test_z_FDR_0.01.nii.gz') #Neurosynth-Mask volnames = list(set([k.rsplit('.',1)[0] for k in os.listdir('alignedData')])) wordLabels = []; patLabel = []; wordVecs = [] for vol in volnames: g = nib.load('alignedData/'+vol+'.HEAD') gg = nib.brikhead.AFNIHeader(nib.brikhead.parse_AFNI_header('alignedData/'+vol+'.HEAD')) wordLabels.extend(gg.get_volume_labels()); patLabel.extend([vol.rsplit('.')[0]]*320) resamp_mask = nil.image.resample_to_img(langMask,g) wordVecs.append( g.get_fdata()[resamp_mask.dataobj &amp;gt;2,:].T ) #Threshold neurosynth mask at Z&amp;gt;2 allVecs = np.concatenate(wordVecs,axis=0) The result of this is a 34,000 dimensional vector for each word in each patient which gives us a data matrix of [7,000 by 34,000]. This can then be analyzed using dimensionality reduction techniques such as PCA, tSNE, and Diffusion mapping. Unfortunately, after running these analysis, there was no ‘naturual’ ordering to the words, so for the moment, this is where my analysis ends. References Saladin, Kenneth (2012). Anatomy and Physiology. New York: McGraw Hill. pp. 541, 542. &amp;#8617;</summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="http://localhost:4000/assets/default-social-image.png" /><media:content medium="image" url="http://localhost:4000/assets/default-social-image.png" xmlns:media="http://search.yahoo.com/mrss/" /></entry><entry><title type="html">Linear Regression and Linear Classification</title><link href="http://localhost:4000/2020/01/08/linear-class/" rel="alternate" type="text/html" title="Linear Regression and Linear Classification" /><published>2020-01-08T00:00:00+00:00</published><updated>2020-01-08T00:00:00+00:00</updated><id>http://localhost:4000/2020/01/08/linear-class</id><content type="html" xml:base="http://localhost:4000/2020/01/08/linear-class/">&lt;p&gt;This post is to detail the similarities between linear regression and linear classification techniques. First, we will consider some data for linear regression which falls into two categories.&lt;/p&gt;
+
+&lt;p&gt;Consider some data:&lt;/p&gt;
+
+&lt;table&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th&gt;X1&lt;/th&gt;
+      &lt;th&gt;X2&lt;/th&gt;
+      &lt;th&gt;Category&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;0.11&lt;/td&gt;
+      &lt;td&gt;0.96&lt;/td&gt;
+      &lt;td&gt;1&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;0.2&lt;/td&gt;
+      &lt;td&gt;0.57&lt;/td&gt;
+      &lt;td&gt;1&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;3.29&lt;/td&gt;
+      &lt;td&gt;4.22&lt;/td&gt;
+      &lt;td&gt;2&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;5.02&lt;/td&gt;
+      &lt;td&gt;6&lt;/td&gt;
+      &lt;td&gt;2&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;6.08&lt;/td&gt;
+      &lt;td&gt;7.13&lt;/td&gt;
+      &lt;td&gt;2&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;0.60&lt;/td&gt;
+      &lt;td&gt;1.24&lt;/td&gt;
+      &lt;td&gt;1&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;3.96&lt;/td&gt;
+      &lt;td&gt;4.08&lt;/td&gt;
+      &lt;td&gt;2&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;3.16&lt;/td&gt;
+      &lt;td&gt;3.48&lt;/td&gt;
+      &lt;td&gt;2&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;-0.50&lt;/td&gt;
+      &lt;td&gt;0.73&lt;/td&gt;
+      &lt;td&gt;1&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;2.28&lt;/td&gt;
+      &lt;td&gt;2.490&lt;/td&gt;
+      &lt;td&gt;1&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;0.56&lt;/td&gt;
+      &lt;td&gt;1.73&lt;/td&gt;
+      &lt;td&gt;1&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;5.24&lt;/td&gt;
+      &lt;td&gt;6&lt;/td&gt;
+      &lt;td&gt;2&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;1.50&lt;/td&gt;
+      &lt;td&gt;2.900&lt;/td&gt;
+      &lt;td&gt;1&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;3.68&lt;/td&gt;
+      &lt;td&gt;3.79&lt;/td&gt;
+      &lt;td&gt;2&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;0.86&lt;/td&gt;
+      &lt;td&gt;1.48&lt;/td&gt;
+      &lt;td&gt;1&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/scat1.svg&quot; alt=&quot;scattfit&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;To copy these variables, paste the following lines into matlab&lt;/p&gt;
+&lt;div class=&quot;language-matlab highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;X&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mf&quot;&gt;0.110705312404362&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mf&quot;&gt;0.962036338238243&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;&lt;span class=&quot;mf&quot;&gt;0.195536168994095&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mf&quot;&gt;0.567433726105442&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;&lt;span class=&quot;mf&quot;&gt;3.29080172573339&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mf&quot;&gt;4.21580925766402&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;&lt;span class=&quot;mf&quot;&gt;5.02219607197230&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mf&quot;&gt;5.99689256969713&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;&lt;span class=&quot;mf&quot;&gt;6.07542982055026&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mf&quot;&gt;7.13347594983259&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;&lt;span class=&quot;mf&quot;&gt;0.599994589792336&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mf&quot;&gt;1.23715662880782&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;&lt;span class=&quot;mf&quot;&gt;3.96292001423081&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mf&quot;&gt;4.08146134381088&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;&lt;span class=&quot;mf&quot;&gt;3.15718188586238&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mf&quot;&gt;3.48100422049278&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mf&quot;&gt;0.561666701284046&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mf&quot;&gt;0.729987382373674&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;&lt;span class=&quot;mf&quot;&gt;2.27606954894299&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mf&quot;&gt;2.49156460997681&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;&lt;span class=&quot;mf&quot;&gt;0.562861314317448&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mf&quot;&gt;1.73074288392112&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;&lt;span class=&quot;mf&quot;&gt;5.23577426251946&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mf&quot;&gt;5.99710543566519&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;&lt;span class=&quot;mf&quot;&gt;1.49624905326917&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mf&quot;&gt;2.90499627947359&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;&lt;span class=&quot;mf&quot;&gt;3.68201519547809&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mf&quot;&gt;3.79257208848654&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;&lt;span class=&quot;mf&quot;&gt;0.858292592800166&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mf&quot;&gt;1.48433420568446&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;];&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;r&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mf&quot;&gt;0.6350&lt;/span&gt; &lt;span class=&quot;mf&quot;&gt;0.0780&lt;/span&gt; &lt;span class=&quot;mf&quot;&gt;0.1840&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;];&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;b&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt; &lt;span class=&quot;mf&quot;&gt;0.4470&lt;/span&gt; &lt;span class=&quot;mf&quot;&gt;0.7410&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;];&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;c&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;b&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;b&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;r&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;r&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;r&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;b&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;r&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;r&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;b&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;b&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;b&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;r&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;b&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;r&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;b&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;];&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Above, the regression can be thought of as finding some w’s such that:&lt;/p&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;X2 = w_1*X1 + w_0&lt;/script&gt;
+
+&lt;p&gt;From here, one can use a closed form solution which follows:&lt;/p&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;w^* = (X^TX)^{-1}X^Ty&lt;/script&gt;
+
+&lt;p&gt;In matlab, this equation can be implemented as follows:&lt;/p&gt;
+
+&lt;div class=&quot;language-matlab highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;d&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;X&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(:,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;ones&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;15&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)];&lt;/span&gt;  &lt;span class=&quot;c1&quot;&gt;% add a ones column for offset&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;w&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;inv&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;d&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'*d)*d'&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;X&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(:,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;nb&quot;&gt;hold&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;on&lt;/span&gt;
+&lt;span class=&quot;nb&quot;&gt;scatter&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;X&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(:,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;X&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(:,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),[],&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;c&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'filled'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;nb&quot;&gt;plot&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;X&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(:,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;w&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'*d'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;nb&quot;&gt;hold&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;off&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;&lt;img src=&quot;/assets/scat_wfit.svg&quot; alt=&quot;scattfit&quot; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;classification&quot;&gt;Classification&lt;/h2&gt;
+&lt;p&gt;In order to change the above regression problem into a classification problem, we can simply use the columns X1 and X2 to regress out a third column (Category). After this, we can simply set a threshold (naivly, maybe 1.6) to classify!
+We might also want to look at the decision boundary, and this can be done by using the solved weights. The code to do this in matlab is:&lt;/p&gt;
+
+&lt;div class=&quot;language-matlab highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;g&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;];&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;d2&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;X&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;ones&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;15&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)];&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;w2&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;inv&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;d2&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'*d2)*d2'&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;g&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;g_hat&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;w2&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'*d2'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;colors&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;zeros&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;15&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;15&lt;/span&gt; 
+    &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;g_hat&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;mf&quot;&gt;1.6&lt;/span&gt; 
+        &lt;span class=&quot;n&quot;&gt;colors&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,:)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;b&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; 
+    &lt;span class=&quot;k&quot;&gt;else&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;colors&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,:)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;r&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;end&lt;/span&gt; 
+&lt;span class=&quot;k&quot;&gt;end&lt;/span&gt; 
+&lt;span class=&quot;nb&quot;&gt;hold&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;on&lt;/span&gt;
+&lt;span class=&quot;nb&quot;&gt;scatter&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;X&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(:,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;X&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(:,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),[],&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;colors&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'filled'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;nb&quot;&gt;fimplicit&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;@&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;y&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;w2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;x&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;w2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;y&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;w2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mf&quot;&gt;1.6&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;nb&quot;&gt;hold&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;off&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;&lt;img src=&quot;/assets/scat2.svg&quot; alt=&quot;scatt&quot; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;conclusion&quot;&gt;Conclusion&lt;/h2&gt;
+&lt;p&gt;In short, as you expect, for linearly seperable data, we can model linear regression and linear classification as similar processes&lt;/p&gt;</content><author><name>Stephen Mazurchuk</name></author><summary type="html">This post is to detail the similarities between linear regression and linear classification techniques. First, we will consider some data for linear regression which falls into two categories. Consider some data: X1 X2 Category 0.11 0.96 1 0.2 0.57 1 3.29 4.22 2 5.02 6 2 6.08 7.13 2 0.60 1.24 1 3.96 4.08 2 3.16 3.48 2 -0.50 0.73 1 2.28 2.490 1 0.56 1.73 1 5.24 6 2 1.50 2.900 1 3.68 3.79 2 0.86 1.48 1 To copy these variables, paste the following lines into matlab X = [0.110705312404362,0.962036338238243;0.195536168994095,0.567433726105442;3.29080172573339,4.21580925766402;5.02219607197230,5.99689256969713;6.07542982055026,7.13347594983259;0.599994589792336,1.23715662880782;3.96292001423081,4.08146134381088;3.15718188586238,3.48100422049278;-0.561666701284046,0.729987382373674;2.27606954894299,2.49156460997681;0.562861314317448,1.73074288392112;5.23577426251946,5.99710543566519;1.49624905326917,2.90499627947359;3.68201519547809,3.79257208848654;0.858292592800166,1.48433420568446]; r = [0.6350 0.0780 0.1840]; b=[0 0.4470 0.7410]; c = [b; b; r; r; r; b; r; r; b; b; b; r; b; r; b]; Above, the regression can be thought of as finding some w’s such that: From here, one can use a closed form solution which follows: In matlab, this equation can be implemented as follows: d = [X(:,1),ones(15,1)]; % add a ones column for offset w = inv(d'*d)*d'*X(:,2); hold on scatter(X(:,1),X(:,2),[],c,'filled') plot(X(:,1),w'*d') hold off Classification In order to change the above regression problem into a classification problem, we can simply use the columns X1 and X2 to regress out a third column (Category). After this, we can simply set a threshold (naivly, maybe 1.6) to classify! We might also want to look at the decision boundary, and this can be done by using the solved weights. The code to do this in matlab is: g = [1,1,2,2,2,1,2,2,1,1,1,2,1,2,1]; d2 = [X, ones(15,1)]; w2 = inv(d2'*d2)*d2'*g'; g_hat = w2'*d2'; colors = zeros(15,3); for i=1:15 if g_hat(i)&amp;lt;1.6 colors(i,:)=b; else colors(i,:)=r; end end hold on scatter(X(:,1),X(:,2),[],colors,'filled') fimplicit(@(x,y) w2(1)*x + w2(2)*y +w2(3)-1.6) hold off Conclusion In short, as you expect, for linearly seperable data, we can model linear regression and linear classification as similar processes</summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="http://localhost:4000/assets/default-social-image.png" /><media:content medium="image" url="http://localhost:4000/assets/default-social-image.png" xmlns:media="http://search.yahoo.com/mrss/" /></entry><entry><title type="html">Creating a GLM for SOE Data</title><link href="http://localhost:4000/2019/12/05/GLM/" rel="alternate" type="text/html" title="Creating a GLM for SOE Data" /><published>2019-12-05T00:00:00+00:00</published><updated>2019-12-05T00:00:00+00:00</updated><id>http://localhost:4000/2019/12/05/GLM</id><content type="html" xml:base="http://localhost:4000/2019/12/05/GLM/">&lt;p&gt;I thought it might be useful to have a little tutorial about how the GLM maps are created for the SOE data. I am basing this off the current method in Tony’s scripts.&lt;/p&gt;
+
+&lt;h2 id=&quot;processing-scripts&quot;&gt;Processing Scripts&lt;/h2&gt;
+&lt;p&gt;The general process of creating &lt;script type=&quot;math/tex&quot;&gt;\beta&lt;/script&gt;-maps for each word requires regressingn out words, nuissance regressors and motion.&lt;/p&gt;
+
+&lt;h1 id=&quot;building-word-and-nuissance-regressors&quot;&gt;Building Word and Nuissance Regressors&lt;/h1&gt;
+&lt;p&gt;The first step is to make 1d regressor files to feed into afni.Tony has a script, &lt;code class=&quot;highlighter-rouge&quot;&gt;regressors.py&lt;/code&gt; which which has several functions:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;build_large_file - converts psychopy table into python variable with proper format&lt;/li&gt;
+  &lt;li&gt;demean_and_write - groups reaction time into 6 groups (2 per session), and converts reaction times into z-scores&lt;/li&gt;
+  &lt;li&gt;word_length   - creates word-length as a nuisance regressor&lt;/li&gt;
+  &lt;li&gt;word_stim_time   - creates 1d arrays for target word and all other words&lt;/li&gt;
+  &lt;li&gt;copy_anat      - uses &lt;code class=&quot;highlighter-rouge&quot;&gt;3dcopy&lt;/code&gt; to copy anatomy files (not sure why?)&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;At the end of all this work, we have generated the files&lt;/p&gt;
+
+&lt;h1 id=&quot;building-motion-regressors&quot;&gt;Building Motion Regressors&lt;/h1&gt;
+
+&lt;p&gt;The script &lt;code class=&quot;highlighter-rouge&quot;&gt;3dDcon_Preparation.py&lt;/code&gt; (which requires python 2) generates the motion regressors. This script has two functions:&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;afni_to_nifti - this runs the afni command &lt;code class=&quot;highlighter-rouge&quot;&gt;3dAFNItoNIFTI&lt;/code&gt; where all the pre-processed scans in the SOE320 projects folder are converted to nifti files into Tony’s directory&lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;prepare_motion_censor_regressor - this takes the motion files from the pre-processed directory. The first three steps use the function &lt;code class=&quot;highlighter-rouge&quot;&gt;1d_tool.py&lt;/code&gt; and this function performs the following tasks:&lt;/p&gt;
+
+    &lt;table&gt;
+      &lt;tbody&gt;
+        &lt;tr&gt;
+          &lt;td&gt;De-meaned motion parameters&lt;/td&gt;
+          &lt;td&gt;Removes the mean from 1d files&lt;/td&gt;
+        &lt;/tr&gt;
+        &lt;tr&gt;
+          &lt;td&gt;Motion parameter derivatives&lt;/td&gt;
+          &lt;td&gt;Creates .1d derivative file&lt;/td&gt;
+        &lt;/tr&gt;
+        &lt;tr&gt;
+          &lt;td&gt;Create censor file&lt;/td&gt;
+          &lt;td&gt;Takes 1d file and creates a censor 1d file&lt;/td&gt;
+        &lt;/tr&gt;
+        &lt;tr&gt;
+          &lt;td&gt;Combine censor results&lt;/td&gt;
+          &lt;td&gt;Uses &lt;code class=&quot;highlighter-rouge&quot;&gt;1deval&lt;/code&gt; to set motion outlier as 0.1 (1-step(a - 0.1))&lt;/td&gt;
+        &lt;/tr&gt;
+        &lt;tr&gt;
+          &lt;td&gt;Combine multiple censor files&lt;/td&gt;
+          &lt;td&gt;Uses &lt;code class=&quot;highlighter-rouge&quot;&gt;1deval&lt;/code&gt; to combine censor files using &lt;script type=&quot;math/tex&quot;&gt;a*b&lt;/script&gt;&lt;/td&gt;
+        &lt;/tr&gt;
+      &lt;/tbody&gt;
+    &lt;/table&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h1 id=&quot;3ddeconvolve-script&quot;&gt;3dDeconvolve Script&lt;/h1&gt;
+
+&lt;p&gt;Tony then has a script for running 3d deconvolve (&lt;code class=&quot;highlighter-rouge&quot;&gt;3dDcon_SOE_Doug.py&lt;/code&gt;) which has the following functions:&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;extract_words - creates sorted list of words based on file names in patient directory&lt;/li&gt;
+  &lt;li&gt;separate_words - creates several subgroups of words (number of groups fed in as argument)&lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;Set_the_deconvolve_line - This is used to create the design matrix which is fed into the next step. The regressors included here are:&lt;/p&gt;
+
+    &lt;table&gt;
+      &lt;tbody&gt;
+        &lt;tr&gt;
+          &lt;td&gt;Censor Regressor&lt;/td&gt;
+          &lt;td&gt;Motion censor&lt;/td&gt;
+        &lt;/tr&gt;
+        &lt;tr&gt;
+          &lt;td&gt;Target word regressor&lt;/td&gt;
+          &lt;td&gt;This is the time point for the word of interest (6 time points)&lt;/td&gt;
+        &lt;/tr&gt;
+        &lt;tr&gt;
+          &lt;td&gt;All other words&lt;/td&gt;
+          &lt;td&gt;This is a regressor for AOW&lt;/td&gt;
+        &lt;/tr&gt;
+        &lt;tr&gt;
+          &lt;td&gt;Word length regressor&lt;/td&gt;
+          &lt;td&gt;This is a regressor for visual information&lt;/td&gt;
+        &lt;/tr&gt;
+        &lt;tr&gt;
+          &lt;td&gt;Response Time regressor&lt;/td&gt;
+          &lt;td&gt;This is the reaction time z-score. This is thought to correlate with overall word difficulty. &lt;strong&gt;Note&lt;/strong&gt;: &lt;em&gt;This is split into 6 different groups, so this is really 6 different regressors&lt;/em&gt;&lt;/td&gt;
+        &lt;/tr&gt;
+        &lt;tr&gt;
+          &lt;td&gt;Motion demean&lt;/td&gt;
+          &lt;td&gt;Not really sure?&lt;/td&gt;
+        &lt;/tr&gt;
+        &lt;tr&gt;
+          &lt;td&gt;Motion derivitive&lt;/td&gt;
+          &lt;td&gt;Not sure how generated&lt;/td&gt;
+        &lt;/tr&gt;
+      &lt;/tbody&gt;
+    &lt;/table&gt;
+
+    &lt;ul&gt;
+      &lt;li&gt;The other key points of this line are that ‘SPMG1’ is used as the HRF, and the output directory is called GLM_wordmaps. At the end of this script, the line which is created from this command is too long to include below, but the output of this function is a file called &lt;code class=&quot;highlighter-rouge&quot;&gt;X.xmat.1d&lt;/code&gt; which is fed into the next function&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Set_the_Remlfit_line - This takes in the design matrix, the input, and a brain mask. The output of this command will look something like:&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ 3dREMLfit -matrix .../X.xmat.1D 
+   -input &quot; &quot; 
+   -mask .../SOE_123.mask.nii.gz 
+   -fout -rout -tout -Rbuck /jtong/SOE/GLM_wordmaps/Doug_method/123/stats.nii.gz 
+   -verb
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h1 id=&quot;running-the-script&quot;&gt;Running the Script&lt;/h1&gt;
+&lt;p&gt;Finally, we can now process a patient. We can use Tony’s script &lt;code class=&quot;highlighter-rouge&quot;&gt;build_torque_Doug.py&lt;/code&gt; which creates and submits a job to the cluster. The final command is:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;python3 build_torque_Doug.py SOE_123
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;h1 id=&quot;thoughts--qs&quot;&gt;Thoughts / Q’s&lt;/h1&gt;
+&lt;ul&gt;
+  &lt;li&gt;Why is SMPG1 used instead of a multiple basis functions (seems more common in the literature)?&lt;/li&gt;
+  &lt;li&gt;How/Why to use -censor_prev_TR option in 1d_tool.py (motion censor script)&lt;/li&gt;
+&lt;/ul&gt;</content><author><name>Stephen Mazurchuk</name></author><summary type="html">I thought it might be useful to have a little tutorial about how the GLM maps are created for the SOE data. I am basing this off the current method in Tony’s scripts. Processing Scripts The general process of creating -maps for each word requires regressingn out words, nuissance regressors and motion. Building Word and Nuissance Regressors The first step is to make 1d regressor files to feed into afni.Tony has a script, regressors.py which which has several functions: build_large_file - converts psychopy table into python variable with proper format demean_and_write - groups reaction time into 6 groups (2 per session), and converts reaction times into z-scores word_length - creates word-length as a nuisance regressor word_stim_time - creates 1d arrays for target word and all other words copy_anat - uses 3dcopy to copy anatomy files (not sure why?) At the end of all this work, we have generated the files Building Motion Regressors The script 3dDcon_Preparation.py (which requires python 2) generates the motion regressors. This script has two functions: afni_to_nifti - this runs the afni command 3dAFNItoNIFTI where all the pre-processed scans in the SOE320 projects folder are converted to nifti files into Tony’s directory prepare_motion_censor_regressor - this takes the motion files from the pre-processed directory. The first three steps use the function 1d_tool.py and this function performs the following tasks: De-meaned motion parameters Removes the mean from 1d files Motion parameter derivatives Creates .1d derivative file Create censor file Takes 1d file and creates a censor 1d file Combine censor results Uses 1deval to set motion outlier as 0.1 (1-step(a - 0.1)) Combine multiple censor files Uses 1deval to combine censor files using 3dDeconvolve Script Tony then has a script for running 3d deconvolve (3dDcon_SOE_Doug.py) which has the following functions: extract_words - creates sorted list of words based on file names in patient directory separate_words - creates several subgroups of words (number of groups fed in as argument) Set_the_deconvolve_line - This is used to create the design matrix which is fed into the next step. The regressors included here are: Censor Regressor Motion censor Target word regressor This is the time point for the word of interest (6 time points) All other words This is a regressor for AOW Word length regressor This is a regressor for visual information Response Time regressor This is the reaction time z-score. This is thought to correlate with overall word difficulty. Note: This is split into 6 different groups, so this is really 6 different regressors Motion demean Not really sure? Motion derivitive Not sure how generated The other key points of this line are that ‘SPMG1’ is used as the HRF, and the output directory is called GLM_wordmaps. At the end of this script, the line which is created from this command is too long to include below, but the output of this function is a file called X.xmat.1d which is fed into the next function Set_the_Remlfit_line - This takes in the design matrix, the input, and a brain mask. The output of this command will look something like: $ 3dREMLfit -matrix .../X.xmat.1D -input &quot; &quot; -mask .../SOE_123.mask.nii.gz -fout -rout -tout -Rbuck /jtong/SOE/GLM_wordmaps/Doug_method/123/stats.nii.gz -verb Running the Script Finally, we can now process a patient. We can use Tony’s script build_torque_Doug.py which creates and submits a job to the cluster. The final command is: python3 build_torque_Doug.py SOE_123 Thoughts / Q’s Why is SMPG1 used instead of a multiple basis functions (seems more common in the literature)? How/Why to use -censor_prev_TR option in 1d_tool.py (motion censor script)</summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="http://localhost:4000/assets/default-social-image.png" /><media:content medium="image" url="http://localhost:4000/assets/default-social-image.png" xmlns:media="http://search.yahoo.com/mrss/" /></entry><entry><title type="html">Finding Word Counts</title><link href="http://localhost:4000/2019/12/04/words/" rel="alternate" type="text/html" title="Finding Word Counts" /><published>2019-12-04T00:00:00+00:00</published><updated>2019-12-04T00:00:00+00:00</updated><id>http://localhost:4000/2019/12/04/words</id><content type="html" xml:base="http://localhost:4000/2019/12/04/words/">&lt;h1 id=&quot;finding-word-counts&quot;&gt;Finding Word Counts&lt;/h1&gt;
+
+&lt;p&gt;I thought I might make a little post about to get some word counts. If you are in the MCW neurology department, then go ahead and ssh into my computer to get to a directory with a lot of text files.&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;ssh &lt;span class=&quot;nv&quot;&gt;$username&lt;/span&gt;@noether.neuro.mcw.edu
+&lt;span class=&quot;nb&quot;&gt;cd&lt;/span&gt; /mnt/data/smazurchuk/intern2crea/bookcorpus/out_txts
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;There are over 16,000 text files in this directory which are free books. To get word counts, we can simply use Grep!&lt;/p&gt;
+
+&lt;p&gt;The grep command for $word is:&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nb&quot;&gt;grep&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-r&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-o&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-i&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-w&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$word&lt;/span&gt; | &lt;span class=&quot;nb&quot;&gt;wc&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-l&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;em&gt;note: word is allowed to be a string with a space in it&lt;/em&gt;&lt;/p&gt;
+
+&lt;p&gt;The grep options are:&lt;/p&gt;
+
+&lt;table&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th&gt;Option&lt;/th&gt;
+      &lt;th&gt;Function&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;-r&lt;/td&gt;
+      &lt;td&gt;Just recursively goes through all files in directory tree&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;-o&lt;/td&gt;
+      &lt;td&gt;Print matched part of matching line, with each part on separate line&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;-i&lt;/td&gt;
+      &lt;td&gt;Ignore case&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;-w&lt;/td&gt;
+      &lt;td&gt;Match whole word (cannot be just part of a word)&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;wc&lt;/td&gt;
+      &lt;td&gt;Word count&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;-l&lt;/td&gt;
+      &lt;td&gt;Tell word could to count the number of lines&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;p&gt;The reason for writing the code this way is so that we can get a short python script which can use grep to get wordcounts for a list of words! Below is the code to accomplish just that&lt;/p&gt;
+
+&lt;div class=&quot;language-py highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;wordList&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'red'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'blue'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'words'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;];&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;wordCnt&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[]&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;len&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;wordList&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;idx&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;word&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;enumerate&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;wordList&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;wordCnt&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;idx&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;int&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;os&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;popen&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'grep -r -o -i -w &quot;'&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;word&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'&quot; | wc -l'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;).&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;read&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;())&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h2 id=&quot;double-counts&quot;&gt;Double Counts&lt;/h2&gt;
+&lt;p&gt;The astute reader might notice that some words will get double counted. That is, we don’t want “baseball bat” in the count for “baseball”. This can be remedied by noticing that one string is a strict substring of the other! We can simply iterate each word in the list across the other words, and if &lt;strong&gt;a&lt;/strong&gt; is a substring of &lt;strong&gt;b&lt;/strong&gt;, then we subtract the &lt;strong&gt;count&lt;/strong&gt; of &lt;strong&gt;a&lt;/strong&gt; from the count of &lt;strong&gt;b&lt;/strong&gt;. You can verify this (“baseball bat” - “baseball”), and the corresponding code is here:&lt;/p&gt;
+
+&lt;div class=&quot;language-py highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;idx&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;tWord&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;enumerate&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;wordList&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;idx2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;word&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;enumerate&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;wordList&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;tWord&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;word&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;and&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;idx&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;!=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;idx2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+            &lt;span class=&quot;n&quot;&gt;wordCnt&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;idx&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;wordCnt&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;idx&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;wordCnt&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;idx2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;Hope that helps, and thanks for reading!&lt;/p&gt;</content><author><name>Stephen Mazurchuk</name></author><summary type="html">Finding Word Counts I thought I might make a little post about to get some word counts. If you are in the MCW neurology department, then go ahead and ssh into my computer to get to a directory with a lot of text files. ssh $username@noether.neuro.mcw.edu cd /mnt/data/smazurchuk/intern2crea/bookcorpus/out_txts There are over 16,000 text files in this directory which are free books. To get word counts, we can simply use Grep! The grep command for $word is: grep -r -o -i -w $word | wc -l note: word is allowed to be a string with a space in it The grep options are: Option Function -r Just recursively goes through all files in directory tree -o Print matched part of matching line, with each part on separate line -i Ignore case -w Match whole word (cannot be just part of a word) wc Word count -l Tell word could to count the number of lines The reason for writing the code this way is so that we can get a short python script which can use grep to get wordcounts for a list of words! Below is the code to accomplish just that wordList=['red','blue','words']; wordCnt=[]*len(wordList) for idx, word in enumerate(wordList): wordCnt[idx] = int(os.popen('grep -r -o -i -w &quot;'+ word + '&quot; | wc -l').read()) Double Counts The astute reader might notice that some words will get double counted. That is, we don’t want “baseball bat” in the count for “baseball”. This can be remedied by noticing that one string is a strict substring of the other! We can simply iterate each word in the list across the other words, and if a is a substring of b, then we subtract the count of a from the count of b. You can verify this (“baseball bat” - “baseball”), and the corresponding code is here: for idx, tWord in enumerate(wordList): for idx2, word in enumerate(wordList): if tWord in word and idx!=idx2: wordCnt[idx] = wordCnt[idx]-wordCnt[idx2] Hope that helps, and thanks for reading!</summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="http://localhost:4000/assets/default-social-image.png" /><media:content medium="image" url="http://localhost:4000/assets/default-social-image.png" xmlns:media="http://search.yahoo.com/mrss/" /></entry><entry><title type="html">Phoneme Analysis</title><link href="http://localhost:4000/posts/phoneme" rel="alternate" type="text/html" title="Phoneme Analysis" /><published>2019-11-27T00:00:00+00:00</published><updated>2019-11-27T00:00:00+00:00</updated><id>http://localhost:4000/posts/phoneme</id><content type="html" xml:base="http://localhost:4000/posts/phoneme">&lt;p&gt;This is some preliminary analysis on the phoneme dataset. There is a jupyter notebook with the code to generate the plots in this post, but I thought it might be better to simple put the results in here. First, some general propterties of the data:&lt;/p&gt;
+
+&lt;table&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Number of Patients&lt;/td&gt;
+      &lt;td&gt;87&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Number of Runs&lt;/td&gt;
+      &lt;td&gt;230&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Number of Patients with &amp;gt;3 runs&lt;/td&gt;
+      &lt;td&gt;18&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;p&gt;&lt;em&gt;Note: A run is 80 tasks &lt;strong&gt;not&lt;/strong&gt; 160&lt;/em&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;distribution-of-scores&quot;&gt;Distribution of Scores&lt;/h2&gt;
+&lt;p&gt;Below is the score distrition for the runs (note, this is for 160 when possible)&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;/assets/Distribution_Scores.svg&quot;&gt; &lt;img src=&quot;/assets/Distribution_Scores.svg&quot; alt=&quot;&quot; /&gt; &lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;As a sanity check, I also thought we should look to see the reaction times of all the patients. Plotted here is a histogram for each patient’s reaction time histogram. It is interesting how varied the reaction times are.&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;/assets/Patient_RT_hists.svg&quot;&gt; &lt;img src=&quot;/assets/Patient_RT_hists.svg&quot; alt=&quot;&quot; /&gt; &lt;/a&gt;&lt;/p&gt;
+
+&lt;h1 id=&quot;natural-clusters&quot;&gt;Natural Clusters&lt;/h1&gt;
+&lt;p&gt;I thought we should also see of there is any natural clustering in the dataset. To do this, we can take a the score vector for each run and project this onto principle components. In practice, there are specific algorithms which are non-linear and specifically try to cluster the data (specifically, &lt;a href=&quot;'https://en.wikipedia.org/wiki/T-distributed_stochastic_neighbor_embedding'&quot;&gt;tSNE&lt;/a&gt;)&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;/assets/tsne_score.svg&quot;&gt; &lt;img src=&quot;/assets/tsne_score.svg&quot; alt=&quot;&quot; /&gt; &lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;Next, I thought I would look to see if the small clusters are indeed the same people. For this analysis, I took all runs which were from a patient who had at least 4 runs and then color coded them. There are 18 patients who met this criteria, and therefore 18 colors in this plot.&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;/assets/colored_tsne_scores.svg&quot;&gt; &lt;img src=&quot;/assets/colored_tsne_scores.svg&quot; alt=&quot;&quot; /&gt; &lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;We could also replicate this process using the reaction time data&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;/assets/colored_tsne_RT.svg&quot;&gt; &lt;img src=&quot;/assets/colored_tsne_RT.svg&quot; alt=&quot;&quot; /&gt; &lt;/a&gt;&lt;/p&gt;</content><author><name>Stephen Mazurchuk</name></author><summary type="html">This is some preliminary analysis on the phoneme dataset. There is a jupyter notebook with the code to generate the plots in this post, but I thought it might be better to simple put the results in here. First, some general propterties of the data: Number of Patients 87 Number of Runs 230 Number of Patients with &amp;gt;3 runs 18 Note: A run is 80 tasks not 160 Distribution of Scores Below is the score distrition for the runs (note, this is for 160 when possible) As a sanity check, I also thought we should look to see the reaction times of all the patients. Plotted here is a histogram for each patient’s reaction time histogram. It is interesting how varied the reaction times are. Natural Clusters I thought we should also see of there is any natural clustering in the dataset. To do this, we can take a the score vector for each run and project this onto principle components. In practice, there are specific algorithms which are non-linear and specifically try to cluster the data (specifically, tSNE) Next, I thought I would look to see if the small clusters are indeed the same people. For this analysis, I took all runs which were from a patient who had at least 4 runs and then color coded them. There are 18 patients who met this criteria, and therefore 18 colors in this plot. We could also replicate this process using the reaction time data</summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="http://localhost:4000/assets/default-social-image.png" /><media:content medium="image" url="http://localhost:4000/assets/default-social-image.png" xmlns:media="http://search.yahoo.com/mrss/" /></entry></feed>
